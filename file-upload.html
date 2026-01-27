@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件上传与配置 - 原型图</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #09090b;
+      --bg-secondary: #18181b;
+      --bg-tertiary: #27272a;
+      --bg-elevated: #3f3f46;
+      --border-default: #3f3f46;
+      --border-subtle: #27272a;
+      --border-accent: #6366f1;
+      --text-primary: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --accent-primary: #6366f1;
+      --accent-success: #22c55e;
+      --accent-warning: #f59e0b;
+      --accent-error: #ef4444;
+      --accent-info: #0ea5e9;
+      --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --transition-fast: 150ms ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', 'Noto Sans SC', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* 顶部导航 */
+    .top-nav {
+      height: 56px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-default);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+    }
+
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .nav-back:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-title {
+      margin-left: 24px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .nav-breadcrumb {
+      margin-left: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* 主容器 */
+    .main-container {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      height: calc(100vh - 56px);
+    }
+
+    .content-area {
+      padding: 32px;
+      overflow-y: auto;
+    }
+
+    .config-panel {
+      background: var(--bg-secondary);
+      border-left: 1px solid var(--border-default);
+      overflow-y: auto;
+    }
+
+    /* 页面标题 */
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .page-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* 标签页 */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      background: var(--bg-secondary);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      width: fit-content;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      border: none;
+      background: transparent;
+    }
+
+    .tab:hover {
+      color: var(--text-primary);
+    }
+
+    .tab.active {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    /* 上传区域 */
+    .upload-section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .upload-area {
+      border: 2px dashed var(--border-default);
+      border-radius: var(--radius-lg);
+      padding: 60px 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .upload-area:hover {
+      border-color: var(--accent-primary);
+      background: rgba(99, 102, 241, 0.05);
+    }
+
+    .upload-area.dragover {
+      border-color: var(--accent-primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .upload-icon {
+      font-size: 56px;
+      margin-bottom: 20px;
+    }
+
+    .upload-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .upload-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .upload-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--gradient-primary);
+      border: none;
+      border-radius: var(--radius-md);
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .upload-formats {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .format-badge {
+      padding: 6px 12px;
+      background: var(--bg-tertiary);
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* 文件列表 */
+    .file-list {
+      margin-top: 24px;
+    }
+
+    .file-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .file-list-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .file-list-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .file-action-btn {
+      padding: 8px 14px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .file-action-btn:hover {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      transition: var(--transition-fast);
+    }
+
+    .file-item:hover {
+      background: var(--bg-elevated);
+    }
+
+    .file-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-primary);
+    }
+
+    .file-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .file-info {
+      flex: 1;
+    }
+
+    .file-name {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .file-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 12px;
+    }
+
+    .file-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-badge.ready {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent-success);
+    }
+
+    .status-badge.processing {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-warning);
+    }
+
+    .status-badge.error {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--accent-error);
+    }
+
+    .status-badge.indexing {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--accent-primary);
+    }
+
+    .progress-bar {
+      width: 120px;
+      height: 6px;
+      background: var(--bg-secondary);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-fill.parsing {
+      background: var(--accent-warning);
+    }
+
+    .progress-fill.indexing {
+      background: var(--accent-primary);
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .file-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      border: 1px solid var(--border-default);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .file-btn:hover {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    /* 术语上传 */
+    .glossary-section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .glossary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .glossary-upload {
+      display: flex;
+      gap: 12px;
+    }
+
+    .glossary-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .glossary-table th {
+      text-align: left;
+      padding: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .glossary-table td {
+      padding: 12px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .glossary-table tr:hover td {
+      background: var(--bg-tertiary);
+    }
+
+    .glossary-term {
+      font-weight: 500;
+      color: var(--accent-info);
+    }
+
+    .glossary-add {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .glossary-input {
+      flex: 1;
+      padding: 10px 14px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+
+    /* 向量索引状态 */
+    .index-status-section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+    }
+
+    .status-overview {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .status-card {
+      padding: 20px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .status-value {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .status-value.success {
+      color: var(--accent-success);
+    }
+
+    .status-value.warning {
+      color: var(--accent-warning);
+    }
+
+    .status-value.primary {
+      color: var(--accent-primary);
+    }
+
+    .status-label {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .index-progress-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .index-progress-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+    }
+
+    .index-file-icon {
+      font-size: 24px;
+    }
+
+    .index-file-info {
+      flex: 1;
+    }
+
+    .index-file-name {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .index-progress-bar {
+      height: 8px;
+      background: var(--bg-secondary);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .index-progress-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .index-progress-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .index-status-tag {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* 右侧配置面板 */
+    .panel-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .panel-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .panel-content {
+      padding: 24px;
+    }
+
+    .config-section {
+      margin-bottom: 28px;
+    }
+
+    .config-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .config-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .config-group {
+      margin-bottom: 20px;
+    }
+
+    .config-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .config-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .config-input {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+
+    .config-select {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .config-slider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .config-slider input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 6px;
+      background: var(--bg-tertiary);
+      border-radius: 3px;
+    }
+
+    .config-slider input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .config-slider-value {
+      min-width: 50px;
+      padding: 6px 10px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .config-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+    }
+
+    .toggle-switch {
+      width: 44px;
+      height: 24px;
+      background: var(--bg-elevated);
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .toggle-switch.active {
+      background: var(--accent-primary);
+    }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: var(--transition-fast);
+    }
+
+    .toggle-switch.active::after {
+      left: 23px;
+    }
+
+    /* 向量库配置 */
+    .vector-db-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .vector-db-option {
+      padding: 16px;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-md);
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .vector-db-option:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .vector-db-option.selected {
+      border-color: var(--accent-primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .vector-db-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .vector-db-name {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* Embedding 模型选择 */
+    .model-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .model-option:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .model-option.selected {
+      border-color: var(--accent-primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .model-radio {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border-default);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .model-option.selected .model-radio {
+      border-color: var(--accent-primary);
+    }
+
+    .model-option.selected .model-radio::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+    }
+
+    .model-info {
+      flex: 1;
+    }
+
+    .model-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .model-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .model-badge {
+      padding: 4px 8px;
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent-success);
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* 更新模式 */
+    .update-mode-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .update-mode-option {
+      padding: 16px;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .update-mode-option:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .update-mode-option.selected {
+      border-color: var(--accent-primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .update-mode-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .update-mode-name {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .update-mode-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* 底部操作 */
+    .panel-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-default);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-elevated);
+    }
+
+    .btn-warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-warning);
+      border: 1px solid var(--accent-warning);
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <nav class="top-nav">
+    <a href="create-kb.html" class="nav-back">
+      <span>←</span>
+      <span>返回</span>
+    </a>
+    <span class="nav-title">文件上传与配置</span>
+    <span class="nav-breadcrumb">/ 客服-提现问题知识库</span>
+  </nav>
+
+  <div class="main-container">
+    <!-- 左侧内容区 -->
+    <div class="content-area">
+      <!-- 页面标题 -->
+      <div class="page-header">
+        <h1 class="page-title">📤 文件上传与配置</h1>
+        <p class="page-desc">上传文档、配置解析参数、管理向量索引</p>
+      </div>
+
+      <!-- 标签页 -->
+      <div class="tabs">
+        <button class="tab active">文档上传</button>
+        <button class="tab">术语管理</button>
+        <button class="tab">索引状态</button>
+      </div>
+
+      <!-- 上传区域 -->
+      <div class="upload-section">
+        <h3 class="section-title">
+          <span>📁</span>
+          上传文档
+        </h3>
+
+        <div class="upload-area" id="dropZone">
+          <div class="upload-icon">📤</div>
+          <div class="upload-title">拖放文件到此处上传</div>
+          <div class="upload-desc">或点击下方按钮选择文件 · 支持批量上传</div>
+          <button class="upload-btn">
+            <span>📁</span>
+            <span>选择文件</span>
+          </button>
+          <div class="upload-formats">
+            <span class="format-badge">📄 PDF</span>
+            <span class="format-badge">📝 DOCX</span>
+            <span class="format-badge">📋 TXT</span>
+            <span class="format-badge">📑 Markdown</span>
+            <span class="format-badge">📊 Excel</span>
+            <span class="format-badge">🌐 HTML</span>
+            <span class="format-badge">📦 CSV</span>
+          </div>
+        </div>
+
+        <!-- 文件列表 -->
+        <div class="file-list">
+          <div class="file-list-header">
+            <span class="file-list-title">已上传文件 (4)</span>
+            <div class="file-list-actions">
+              <button class="file-action-btn">全选</button>
+              <button class="file-action-btn">🗑️ 删除选中</button>
+              <button class="file-action-btn">🔄 重新解析</button>
+            </div>
+          </div>
+
+          <div class="file-item">
+            <input type="checkbox" class="file-checkbox" checked />
+            <div class="file-icon">📄</div>
+            <div class="file-info">
+              <div class="file-name">提现操作指南 v2.0.pdf</div>
+              <div class="file-meta">
+                <span>PDF · 2.4 MB</span>
+                <span>45 分段</span>
+                <span>12,340 字符</span>
+              </div>
+            </div>
+            <div class="file-status">
+              <span class="status-badge ready">✓ 已索引</span>
+            </div>
+            <div class="file-actions">
+              <button class="file-btn">👁️</button>
+              <button class="file-btn">🔄</button>
+              <button class="file-btn">🗑️</button>
+            </div>
+          </div>
+
+          <div class="file-item">
+            <input type="checkbox" class="file-checkbox" checked />
+            <div class="file-icon">📝</div>
+            <div class="file-info">
+              <div class="file-name">常见问题FAQ.md</div>
+              <div class="file-meta">
+                <span>Markdown · 156 KB</span>
+                <span>28 分段</span>
+                <span>8,920 字符</span>
+              </div>
+            </div>
+            <div class="file-status">
+              <span class="status-badge ready">✓ 已索引</span>
+            </div>
+            <div class="file-actions">
+              <button class="file-btn">👁️</button>
+              <button class="file-btn">🔄</button>
+              <button class="file-btn">🗑️</button>
+            </div>
+          </div>
+
+          <div class="file-item">
+            <input type="checkbox" class="file-checkbox" />
+            <div class="file-icon">📊</div>
+            <div class="file-info">
+              <div class="file-name">银行限额一览表.xlsx</div>
+              <div class="file-meta">
+                <span>Excel · 89 KB</span>
+                <span>处理中...</span>
+              </div>
+            </div>
+            <div class="file-status">
+              <span class="status-badge indexing">索引中</span>
+              <div class="progress-bar">
+                <div class="progress-fill indexing" style="width: 65%"></div>
+              </div>
+              <span style="font-size: 12px; color: var(--text-muted);">65%</span>
+            </div>
+            <div class="file-actions">
+              <button class="file-btn">⏸️</button>
+              <button class="file-btn">🗑️</button>
+            </div>
+          </div>
+
+          <div class="file-item">
+            <input type="checkbox" class="file-checkbox" />
+            <div class="file-icon">📄</div>
+            <div class="file-info">
+              <div class="file-name">提现失败错误码.docx</div>
+              <div class="file-meta">
+                <span>Word · 234 KB</span>
+                <span>解析中...</span>
+              </div>
+            </div>
+            <div class="file-status">
+              <span class="status-badge processing">解析中</span>
+              <div class="progress-bar">
+                <div class="progress-fill parsing" style="width: 30%"></div>
+              </div>
+              <span style="font-size: 12px; color: var(--text-muted);">30%</span>
+            </div>
+            <div class="file-actions">
+              <button class="file-btn">⏸️</button>
+              <button class="file-btn">🗑️</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 术语管理 -->
+      <div class="glossary-section">
+        <div class="glossary-header">
+          <h3 class="section-title">
+            <span>📖</span>
+            专有名词 / 术语表
+          </h3>
+          <div class="glossary-upload">
+            <button class="file-action-btn">📤 导入术语表</button>
+            <button class="file-action-btn">📥 导出</button>
+          </div>
+        </div>
+
+        <table class="glossary-table">
+          <thead>
+            <tr>
+              <th>术语</th>
+              <th>同义词</th>
+              <th>释义</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="glossary-term">T+1</span></td>
+              <td>隔日到账, 次日到账</td>
+              <td>提现申请后下一个工作日到账</td>
+              <td><button class="file-btn">✏️</button></td>
+            </tr>
+            <tr>
+              <td><span class="glossary-term">实时到账</span></td>
+              <td>即时到账, 秒到</td>
+              <td>提现立即到达银行账户</td>
+              <td><button class="file-btn">✏️</button></td>
+            </tr>
+            <tr>
+              <td><span class="glossary-term">限额</span></td>
+              <td>提现上限, 单笔限额</td>
+              <td>单次或单日最大提现金额限制</td>
+              <td><button class="file-btn">✏️</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="glossary-add">
+          <input type="text" class="glossary-input" placeholder="术语名称" />
+          <input type="text" class="glossary-input" placeholder="同义词（逗号分隔）" />
+          <input type="text" class="glossary-input" placeholder="释义" style="flex: 2;" />
+          <button class="upload-btn" style="padding: 10px 20px;">+ 添加</button>
+        </div>
+      </div>
+
+      <!-- 向量索引状态 -->
+      <div class="index-status-section">
+        <h3 class="section-title">
+          <span>📊</span>
+          向量索引状态
+        </h3>
+
+        <div class="status-overview">
+          <div class="status-card">
+            <div class="status-value success">4</div>
+            <div class="status-label">文档总数</div>
+          </div>
+          <div class="status-card">
+            <div class="status-value primary">156</div>
+            <div class="status-label">分段总数</div>
+          </div>
+          <div class="status-card">
+            <div class="status-value success">2</div>
+            <div class="status-label">已索引</div>
+          </div>
+          <div class="status-card">
+            <div class="status-value warning">2</div>
+            <div class="status-label">处理中</div>
+          </div>
+        </div>
+
+        <div class="index-progress-list">
+          <div class="index-progress-item">
+            <span class="index-file-icon">📄</span>
+            <div class="index-file-info">
+              <div class="index-file-name">提现操作指南 v2.0.pdf</div>
+              <div class="index-progress-bar">
+                <div class="index-progress-fill" style="width: 100%"></div>
+              </div>
+              <div class="index-progress-text">索引完成 · 45 分段 · 耗时 12.3s</div>
+            </div>
+            <span class="index-status-tag status-badge ready">✓ 完成</span>
+          </div>
+
+          <div class="index-progress-item">
+            <span class="index-file-icon">📊</span>
+            <div class="index-file-info">
+              <div class="index-file-name">银行限额一览表.xlsx</div>
+              <div class="index-progress-bar">
+                <div class="index-progress-fill" style="width: 65%"></div>
+              </div>
+              <div class="index-progress-text">正在生成向量... 18/28 分段</div>
+            </div>
+            <span class="index-status-tag status-badge indexing">索引中</span>
+          </div>
+
+          <div class="index-progress-item">
+            <span class="index-file-icon">📄</span>
+            <div class="index-file-info">
+              <div class="index-file-name">提现失败错误码.docx</div>
+              <div class="index-progress-bar">
+                <div class="index-progress-fill" style="width: 30%"></div>
+              </div>
+              <div class="index-progress-text">正在解析文档...</div>
+            </div>
+            <span class="index-status-tag status-badge processing">解析中</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧配置面板 -->
+    <div class="config-panel">
+      <div class="panel-header">
+        <h3 class="panel-title">⚙️ 处理配置</h3>
+      </div>
+
+      <div class="panel-content">
+        <!-- 分段配置 -->
+        <div class="config-section">
+          <div class="config-section-title">
+            <span>✂️</span>
+            分段设置
+          </div>
+
+          <div class="config-group">
+            <div class="config-label">
+              <span>分段大小</span>
+              <span class="config-hint">建议 500-1000</span>
+            </div>
+            <div class="config-slider">
+              <input type="range" min="100" max="2000" value="800" />
+              <span class="config-slider-value">800</span>
+            </div>
+          </div>
+
+          <div class="config-group">
+            <div class="config-label">
+              <span>重叠长度</span>
+              <span class="config-hint">建议 50-200</span>
+            </div>
+            <div class="config-slider">
+              <input type="range" min="0" max="500" value="100" />
+              <span class="config-slider-value">100</span>
+            </div>
+          </div>
+
+          <div class="config-group">
+            <div class="config-label">分段规则</div>
+            <select class="config-select">
+              <option>自动分段（推荐）</option>
+              <option>按段落分段</option>
+              <option>按句子分段</option>
+              <option>按标题分段</option>
+              <option>自定义分隔符</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Embedding 模型 -->
+        <div class="config-section">
+          <div class="config-section-title">
+            <span>🧠</span>
+            Embedding 模型
+          </div>
+
+          <div class="model-option selected">
+            <div class="model-radio"></div>
+            <div class="model-info">
+              <div class="model-name">text-embedding-3-large</div>
+              <div class="model-desc">OpenAI · 3072 维</div>
+            </div>
+            <span class="model-badge">推荐</span>
+          </div>
+
+          <div class="model-option">
+            <div class="model-radio"></div>
+            <div class="model-info">
+              <div class="model-name">text-embedding-3-small</div>
+              <div class="model-desc">OpenAI · 1536 维</div>
+            </div>
+          </div>
+
+          <div class="model-option">
+            <div class="model-radio"></div>
+            <div class="model-info">
+              <div class="model-name">bge-large-zh</div>
+              <div class="model-desc">BAAI · 1024 维</div>
+            </div>
+          </div>
+
+          <div class="model-option">
+            <div class="model-radio"></div>
+            <div class="model-info">
+              <div class="model-name">m3e-base</div>
+              <div class="model-desc">Moka AI · 768 维</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 向量库配置 -->
+        <div class="config-section">
+          <div class="config-section-title">
+            <span>🗄️</span>
+            向量数据库
+          </div>
+
+          <div class="vector-db-options">
+            <div class="vector-db-option selected">
+              <div class="vector-db-icon">🔷</div>
+              <div class="vector-db-name">Milvus</div>
+            </div>
+            <div class="vector-db-option">
+              <div class="vector-db-icon">🐘</div>
+              <div class="vector-db-name">PGVector</div>
+            </div>
+            <div class="vector-db-option">
+              <div class="vector-db-icon">📦</div>
+              <div class="vector-db-name">FAISS</div>
+            </div>
+          </div>
+
+          <div class="config-group">
+            <div class="config-label">索引类型</div>
+            <select class="config-select">
+              <option>IVF_FLAT</option>
+              <option>IVF_SQ8</option>
+              <option>HNSW</option>
+              <option>FLAT</option>
+            </select>
+          </div>
+
+          <div class="config-group">
+            <div class="config-label">
+              <span>nlist (聚类数)</span>
+            </div>
+            <div class="config-slider">
+              <input type="range" min="128" max="4096" value="1024" />
+              <span class="config-slider-value">1024</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 更新模式 -->
+        <div class="config-section">
+          <div class="config-section-title">
+            <span>🔄</span>
+            增量更新模式
+          </div>
+
+          <div class="update-mode-options">
+            <div class="update-mode-option selected">
+              <div class="update-mode-icon">🔄</div>
+              <div class="update-mode-name">覆盖更新</div>
+              <div class="update-mode-desc">删除旧版本，使用新内容</div>
+            </div>
+            <div class="update-mode-option">
+              <div class="update-mode-icon">➕</div>
+              <div class="update-mode-name">追加更新</div>
+              <div class="update-mode-desc">保留原有内容，追加新内容</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 高级选项 -->
+        <div class="config-section">
+          <div class="config-section-title">
+            <span>⚡</span>
+            高级选项
+          </div>
+
+          <div class="config-toggle">
+            <span>自动清洗数据</span>
+            <div class="toggle-switch active"></div>
+          </div>
+
+          <div class="config-toggle">
+            <span>去除重复内容</span>
+            <div class="toggle-switch active"></div>
+          </div>
+
+          <div class="config-toggle">
+            <span>保留原始格式</span>
+            <div class="toggle-switch"></div>
+          </div>
+
+          <div class="config-toggle">
+            <span>提取表格数据</span>
+            <div class="toggle-switch active"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-footer">
+        <button class="btn btn-primary">
+          <span>🚀</span>
+          <span>开始处理</span>
+        </button>
+        <button class="btn btn-warning">
+          <span>🔄</span>
+          <span>重建全部索引</span>
+        </button>
+        <button class="btn btn-secondary">保存配置</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 拖放上传
+    const dropZone = document.getElementById('dropZone');
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      // 处理文件上传逻辑
+    });
+
+    // 切换开关
+    document.querySelectorAll('.toggle-switch').forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        this.classList.toggle('active');
+      });
+    });
+
+    // 模型选择
+    document.querySelectorAll('.model-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.model-option').forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+    });
+
+    // 向量库选择
+    document.querySelectorAll('.vector-db-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.vector-db-option').forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+    });
+
+    // 更新模式选择
+    document.querySelectorAll('.update-mode-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.update-mode-option').forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+    });
+
+    // 标签页切换
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

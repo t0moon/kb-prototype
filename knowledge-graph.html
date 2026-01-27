@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识图谱与SOP管理 - 原型图</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #09090b;
+            --bg-secondary: #18181b;
+            --bg-tertiary: #27272a;
+            --bg-elevated: #3f3f46;
+            --border-default: #3f3f46;
+            --border-subtle: #27272a;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-primary: #6366f1;
+            --accent-success: #22c55e;
+            --accent-warning: #f59e0b;
+            --accent-error: #ef4444;
+            --accent-info: #0ea5e9;
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --transition-fast: 150ms ease;
+            
+            --node-person: #FF6B6B;
+            --node-organization: #4ECDC4;
+            --node-location: #45B7D1;
+            --node-event: #96CEB4;
+            --node-concept: #a78bfa;
+            --node-document: #f472b6;
+            --node-sop: #22c55e;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* 顶部导航 */
+        .top-nav {
+            height: 56px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-default);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .nav-back:hover {
+            color: var(--text-primary);
+        }
+        
+        .nav-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 4px;
+            margin-left: 24px;
+        }
+        
+        .nav-tab {
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            transition: var(--transition-fast);
+        }
+        
+        .nav-tab:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .nav-tab.active {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border: none;
+        }
+        
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-default);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-elevated);
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+        
+        /* 主容器 */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 56px);
+        }
+        
+        /* 图谱画布区域 */
+        .graph-area {
+            flex: 1;
+            position: relative;
+            background: var(--bg-primary);
+        }
+        
+        /* 工具栏 */
+        .graph-toolbar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 380px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 10;
+        }
+        
+        .toolbar-left {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 0 14px;
+            width: 280px;
+        }
+        
+        .search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 10px 0;
+            flex: 1;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+        
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .toolbar-btn {
+            padding: 10px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-fast);
+        }
+        
+        .toolbar-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .toolbar-right {
+            display: flex;
+            gap: 12px;
+        }
+        
+        /* 图谱画布 */
+        .graph-canvas {
+            width: 100%;
+            height: 100%;
+        }
+        
+        #graphContainer {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* 统计面板 */
+        .graph-stats {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 16px;
+            padding: 12px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            z-index: 10;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        /* 图例 */
+        .legend-panel {
+            position: absolute;
+            bottom: 20px;
+            right: 400px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            z-index: 10;
+        }
+        
+        .legend-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+        
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+        
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        /* 缩放控制 */
+        .zoom-controls {
+            position: absolute;
+            bottom: 80px;
+            right: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 10;
+        }
+        
+        .zoom-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-default);
+            background: var(--bg-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .zoom-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        /* 右侧面板 */
+        .side-panel {
+            width: 380px;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border-default);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .panel-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .panel-tab {
+            flex: 1;
+            padding: 14px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            transition: var(--transition-fast);
+        }
+        
+        .panel-tab:hover {
+            color: var(--text-primary);
+        }
+        
+        .panel-tab.active {
+            color: var(--accent-primary);
+            border-bottom: 2px solid var(--accent-primary);
+        }
+        
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        /* 节点详情 */
+        .node-card {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .node-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .node-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .node-info {
+            flex: 1;
+        }
+        
+        .node-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .node-type {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        .node-type .badge {
+            padding: 4px 10px;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .node-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .node-action-btn {
+            padding: 8px 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+        }
+        
+        .node-action-btn:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+        
+        .property-section {
+            margin-bottom: 20px;
+        }
+        
+        .property-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .property-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .property-item:last-child {
+            border-bottom: none;
+        }
+        
+        .property-key {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        .property-value {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            max-width: 180px;
+            text-align: right;
+        }
+        
+        .property-value.editable {
+            padding: 6px 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            cursor: text;
+        }
+        
+        .property-value.editable:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+        
+        /* 关联实体 */
+        .relation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .relation-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .relation-item:hover {
+            background: var(--bg-elevated);
+        }
+        
+        .relation-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+        }
+        
+        .relation-info {
+            flex: 1;
+        }
+        
+        .relation-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .relation-type {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        /* SOP 管理 */
+        .sop-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .sop-item {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .sop-item:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .sop-item.active {
+            border-color: var(--accent-success);
+            background: rgba(34, 197, 94, 0.1);
+        }
+        
+        .sop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .sop-title {
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sop-status {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .sop-status.active {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-success);
+        }
+        
+        .sop-status.draft {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-warning);
+        }
+        
+        .sop-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        
+        .sop-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        .sop-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        
+        .sop-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition-fast);
+        }
+        
+        .sop-btn-secondary {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            color: var(--text-primary);
+        }
+        
+        .sop-btn-secondary:hover {
+            background: var(--bg-elevated);
+        }
+        
+        .sop-btn-primary {
+            background: var(--accent-success);
+            border: none;
+            color: white;
+        }
+        
+        /* 更新配置 */
+        .update-section {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .update-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .update-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        
+        .update-option {
+            padding: 16px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-default);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .update-option:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .update-option.selected {
+            border-color: var(--accent-primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        .update-option-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .update-option-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .update-option-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        
+        /* 导出选项 */
+        .export-section {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+        
+        .export-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .export-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .export-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .export-btn:hover {
+            background: var(--bg-elevated);
+            border-color: var(--accent-primary);
+        }
+        
+        .export-icon {
+            font-size: 20px;
+        }
+        
+        .export-info {
+            flex: 1;
+        }
+        
+        .export-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .export-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        /* Mermaid 预览 */
+        .mermaid-preview {
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-top: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .mermaid-preview .keyword {
+            color: var(--accent-primary);
+        }
+        
+        .mermaid-preview .string {
+            color: var(--accent-success);
+        }
+        
+        /* 节点编辑模态框 */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal-overlay.visible {
+            display: flex;
+        }
+        
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-xl);
+            width: 100%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .modal-close:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .modal-content {
+            padding: 24px;
+            overflow-y: auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+        
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .modal-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        
+        /* SVG 节点样式 */
+        .node-circle {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .node-circle:hover {
+            filter: brightness(1.2);
+        }
+        
+        .node-label {
+            font-size: 11px;
+            fill: var(--text-secondary);
+            pointer-events: none;
+        }
+        
+        .edge-line {
+            stroke: var(--border-default);
+            stroke-width: 1.5;
+        }
+        
+        .node-highlighted .node-circle {
+            stroke: var(--accent-primary);
+            stroke-width: 3px;
+        }
+        
+        .node-dimmed {
+            opacity: 0.2;
+        }
+        
+        .edge-dimmed {
+            opacity: 0.1;
+        }
+        
+        /* 添加节点按钮 */
+        .add-node-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 24px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: var(--radius-lg);
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .add-node-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="index.html" class="nav-back">
+                <span>←</span>
+                <span>返回</span>
+            </a>
+            <span class="nav-title">🔗 知识图谱与SOP管理</span>
+            <div class="nav-tabs">
+                <button class="nav-tab active">知识图谱</button>
+                <button class="nav-tab">SOP流程</button>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="btn btn-secondary">
+                <span>📤</span>
+                <span>导入数据</span>
+            </button>
+            <button class="btn btn-primary" onclick="showUploadModal()">
+                <span>📁</span>
+                <span>上传文档</span>
+            </button>
+        </div>
+    </nav>
+    
+    <div class="main-container">
+        <!-- 图谱画布区域 -->
+        <div class="graph-area">
+            <!-- 工具栏 -->
+            <div class="graph-toolbar">
+                <div class="toolbar-left">
+                    <div class="search-box">
+                        <span>🔍</span>
+                        <input type="text" placeholder="搜索实体节点..." />
+                    </div>
+                    <button class="toolbar-btn" onclick="refreshGraph()">
+                        <span>🔄</span>
+                        <span>刷新</span>
+                    </button>
+                    <button class="toolbar-btn">
+                        <span>🎯</span>
+                        <span>自适应</span>
+                    </button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="toolbar-btn">
+                        <span>📊</span>
+                        <span>布局</span>
+                    </button>
+                    <button class="toolbar-btn">
+                        <span>🔧</span>
+                        <span>筛选</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 图谱画布 -->
+            <div class="graph-canvas">
+                <svg id="graphContainer" width="100%" height="100%">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#3f3f46"/>
+                        </marker>
+                    </defs>
+                    <g id="graphContent"></g>
+                </svg>
+            </div>
+            
+            <!-- 添加节点按钮 -->
+            <button class="add-node-btn" onclick="showNodeModal()">
+                <span>+</span>
+                <span>添加节点</span>
+            </button>
+            
+            <!-- 统计面板 -->
+            <div class="graph-stats">
+                <div class="stat-item">
+                    <span class="stat-label">节点</span>
+                    <span class="stat-value">24</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">边</span>
+                    <span class="stat-value">42</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">SOP</span>
+                    <span class="stat-value">5</span>
+                </div>
+            </div>
+            
+            <!-- 图例 -->
+            <div class="legend-panel">
+                <div class="legend-title">实体类型</div>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: var(--node-concept)"></div>
+                        <span>概念</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: var(--node-document)"></div>
+                        <span>文档</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: var(--node-sop)"></div>
+                        <span>SOP</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: var(--node-event)"></div>
+                        <span>事件</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 缩放控制 -->
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="zoomIn()">+</button>
+                <button class="zoom-btn" onclick="zoomOut()">−</button>
+                <button class="zoom-btn" onclick="resetZoom()">⌖</button>
+            </div>
+        </div>
+        
+        <!-- 右侧面板 -->
+        <div class="side-panel">
+            <div class="panel-tabs">
+                <button class="panel-tab active" onclick="switchPanelTab(this, 'detail')">节点详情</button>
+                <button class="panel-tab" onclick="switchPanelTab(this, 'sop')">SOP管理</button>
+                <button class="panel-tab" onclick="switchPanelTab(this, 'config')">配置</button>
+            </div>
+            
+            <!-- 节点详情 -->
+            <div class="panel-content" id="detail-panel">
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon" style="background: var(--node-concept)">📄</div>
+                        <div class="node-info">
+                            <div class="node-name">提现流程</div>
+                            <div class="node-type">
+                                <span class="badge">概念</span>
+                                <span style="margin-left: 8px;">关联度: 8</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="node-actions">
+                        <button class="node-action-btn" onclick="showNodeModal()">✏️ 编辑</button>
+                        <button class="node-action-btn">🔗 添加关联</button>
+                        <button class="node-action-btn">🗑️</button>
+                    </div>
+                </div>
+                
+                <div class="property-section">
+                    <div class="property-title">属性信息 (可编辑)</div>
+                    <div class="property-item">
+                        <span class="property-key">entity_id</span>
+                        <span class="property-value">withdraw_process_001</span>
+                    </div>
+                    <div class="property-item">
+                        <span class="property-key">名称</span>
+                        <input type="text" class="property-value editable" value="提现流程" />
+                    </div>
+                    <div class="property-item">
+                        <span class="property-key">描述</span>
+                        <input type="text" class="property-value editable" value="用户提现的完整流程说明" />
+                    </div>
+                    <div class="property-item">
+                        <span class="property-key">来源文档</span>
+                        <span class="property-value">提现操作指南.pdf</span>
+                    </div>
+                    <div class="property-item">
+                        <span class="property-key">创建时间</span>
+                        <span class="property-value">2026-01-27</span>
+                    </div>
+                </div>
+                
+                <div class="property-section">
+                    <div class="property-title">关联实体 (8)</div>
+                    <div class="relation-list">
+                        <div class="relation-item">
+                            <div class="relation-icon" style="background: var(--node-sop)">📋</div>
+                            <div class="relation-info">
+                                <div class="relation-name">提现申请SOP</div>
+                                <div class="relation-type">has_sop → 关联SOP</div>
+                            </div>
+                        </div>
+                        <div class="relation-item">
+                            <div class="relation-icon" style="background: var(--node-concept)">💳</div>
+                            <div class="relation-info">
+                                <div class="relation-name">银行卡绑定</div>
+                                <div class="relation-type">requires → 前置条件</div>
+                            </div>
+                        </div>
+                        <div class="relation-item">
+                            <div class="relation-icon" style="background: var(--node-event)">⚠️</div>
+                            <div class="relation-info">
+                                <div class="relation-name">提现失败</div>
+                                <div class="relation-type">may_cause → 可能导致</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SOP管理 -->
+            <div class="panel-content" id="sop-panel" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <span style="font-size: 14px; font-weight: 600;">SOP 流程列表</span>
+                    <button class="btn btn-primary" style="padding: 8px 14px; font-size: 13px;">
+                        <span>+</span>
+                        <span>新建SOP</span>
+                    </button>
+                </div>
+                
+                <div class="sop-list">
+                    <div class="sop-item active">
+                        <div class="sop-header">
+                            <div class="sop-title">
+                                <span>📋</span>
+                                提现申请SOP
+                            </div>
+                            <span class="sop-status active">已发布</span>
+                        </div>
+                        <div class="sop-desc">用户申请提现的标准操作流程，包含身份验证、金额校验、银行卡验证等步骤</div>
+                        <div class="sop-meta">
+                            <span>📊 8 个步骤</span>
+                            <span>👁️ 调用 1,234 次</span>
+                            <span>⏰ 更新于 2天前</span>
+                        </div>
+                        <div class="sop-actions">
+                            <button class="sop-btn sop-btn-secondary">✏️ 编辑</button>
+                            <button class="sop-btn sop-btn-secondary">👁️ 预览</button>
+                            <button class="sop-btn sop-btn-primary">📊 Mermaid</button>
+                        </div>
+                    </div>
+                    
+                    <div class="sop-item">
+                        <div class="sop-header">
+                            <div class="sop-title">
+                                <span>📋</span>
+                                提现失败处理SOP
+                            </div>
+                            <span class="sop-status active">已发布</span>
+                        </div>
+                        <div class="sop-desc">处理用户提现失败的标准流程，包含错误诊断和解决方案</div>
+                        <div class="sop-meta">
+                            <span>📊 6 个步骤</span>
+                            <span>👁️ 调用 567 次</span>
+                            <span>⏰ 更新于 5天前</span>
+                        </div>
+                        <div class="sop-actions">
+                            <button class="sop-btn sop-btn-secondary">✏️ 编辑</button>
+                            <button class="sop-btn sop-btn-secondary">👁️ 预览</button>
+                            <button class="sop-btn sop-btn-primary">📊 Mermaid</button>
+                        </div>
+                    </div>
+                    
+                    <div class="sop-item">
+                        <div class="sop-header">
+                            <div class="sop-title">
+                                <span>📋</span>
+                                银行卡绑定SOP
+                            </div>
+                            <span class="sop-status draft">草稿</span>
+                        </div>
+                        <div class="sop-desc">用户绑定银行卡的操作流程</div>
+                        <div class="sop-meta">
+                            <span>📊 5 个步骤</span>
+                            <span>⏰ 创建于 1天前</span>
+                        </div>
+                        <div class="sop-actions">
+                            <button class="sop-btn sop-btn-secondary">✏️ 编辑</button>
+                            <button class="sop-btn sop-btn-primary">发布</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 配置面板 -->
+            <div class="panel-content" id="config-panel" style="display: none;">
+                <!-- 更新配置 -->
+                <div class="update-section">
+                    <div class="update-title">
+                        <span>🔄</span>
+                        更新模式
+                    </div>
+                    <div class="update-options">
+                        <div class="update-option selected">
+                            <div class="update-option-icon">🔄</div>
+                            <div class="update-option-name">全量更新</div>
+                            <div class="update-option-desc">重新构建整个图谱</div>
+                        </div>
+                        <div class="update-option">
+                            <div class="update-option-icon">➕</div>
+                            <div class="update-option-name">局部更新</div>
+                            <div class="update-option-desc">仅更新变更部分</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;">
+                        <span>🚀</span>
+                        <span>开始更新</span>
+                    </button>
+                </div>
+                
+                <!-- 导出选项 -->
+                <div class="export-section">
+                    <div class="export-title">
+                        <span>📤</span>
+                        导出格式
+                    </div>
+                    <div class="export-options">
+                        <div class="export-btn">
+                            <span class="export-icon">📊</span>
+                            <div class="export-info">
+                                <div class="export-name">Mermaid 格式</div>
+                                <div class="export-desc">导出为 Mermaid 流程图代码</div>
+                            </div>
+                        </div>
+                        <div class="export-btn">
+                            <span class="export-icon">📦</span>
+                            <div class="export-info">
+                                <div class="export-name">JSON 格式</div>
+                                <div class="export-desc">导出完整图谱数据</div>
+                            </div>
+                        </div>
+                        <div class="export-btn">
+                            <span class="export-icon">📄</span>
+                            <div class="export-info">
+                                <div class="export-name">CSV 格式</div>
+                                <div class="export-desc">导出节点和边数据表格</div>
+                            </div>
+                        </div>
+                        <div class="export-btn">
+                            <span class="export-icon">🖼️</span>
+                            <div class="export-info">
+                                <div class="export-name">PNG 图片</div>
+                                <div class="export-desc">导出可视化图片</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mermaid 预览 -->
+                    <div class="mermaid-preview">
+<span class="keyword">graph</span> TD
+    A[<span class="string">用户申请提现</span>] --> B{<span class="string">身份验证</span>}
+    B -->|<span class="string">通过</span>| C[<span class="string">金额校验</span>]
+    B -->|<span class="string">失败</span>| D[<span class="string">提示重新验证</span>]
+    C --> E{<span class="string">余额充足?</span>}
+    E -->|<span class="string">是</span>| F[<span class="string">发起提现</span>]
+    E -->|<span class="string">否</span>| G[<span class="string">提示余额不足</span>]
+    F --> H[<span class="string">等待到账</span>]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 节点编辑模态框 -->
+    <div class="modal-overlay" id="nodeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">✏️ 编辑节点</h3>
+                <button class="modal-close" onclick="hideNodeModal()">✕</button>
+            </div>
+            <div class="modal-content">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">节点名称</label>
+                        <input type="text" class="form-input" value="提现流程" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">节点类型</label>
+                        <select class="form-input">
+                            <option>概念</option>
+                            <option>文档</option>
+                            <option>SOP</option>
+                            <option>事件</option>
+                            <option>人物</option>
+                            <option>组织</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">描述</label>
+                    <textarea class="form-input form-textarea">用户提现的完整流程说明，包含申请、验证、打款等环节</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">关联文档</label>
+                    <select class="form-input">
+                        <option>提现操作指南.pdf</option>
+                        <option>常见问题FAQ.md</option>
+                        <option>银行限额一览表.xlsx</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">自定义属性</label>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <input type="text" class="form-input" placeholder="属性名" style="width: 40%;" />
+                        <input type="text" class="form-input" placeholder="属性值" style="flex: 1;" />
+                        <button class="btn btn-secondary" style="padding: 10px;">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideNodeModal()">取消</button>
+                <button class="btn btn-primary">保存修改</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 图谱数据
+        const graphData = {
+            nodes: [
+                { id: 'withdraw', name: '提现流程', type: 'concept' },
+                { id: 'apply_sop', name: '提现申请SOP', type: 'sop' },
+                { id: 'fail_sop', name: '提现失败处理SOP', type: 'sop' },
+                { id: 'bank_bind', name: '银行卡绑定', type: 'concept' },
+                { id: 'verify', name: '身份验证', type: 'event' },
+                { id: 'amount_check', name: '金额校验', type: 'event' },
+                { id: 'withdraw_fail', name: '提现失败', type: 'event' },
+                { id: 'doc_guide', name: '提现操作指南', type: 'document' },
+                { id: 'doc_faq', name: '常见问题FAQ', type: 'document' },
+                { id: 't1_arrival', name: 'T+1到账', type: 'concept' },
+                { id: 'realtime', name: '实时到账', type: 'concept' },
+                { id: 'limit', name: '提现限额', type: 'concept' }
+            ],
+            edges: [
+                { source: 'withdraw', target: 'apply_sop', type: 'has_sop' },
+                { source: 'withdraw', target: 'bank_bind', type: 'requires' },
+                { source: 'withdraw', target: 'verify', type: 'includes' },
+                { source: 'withdraw', target: 'amount_check', type: 'includes' },
+                { source: 'withdraw', target: 'withdraw_fail', type: 'may_cause' },
+                { source: 'withdraw_fail', target: 'fail_sop', type: 'handled_by' },
+                { source: 'withdraw', target: 'doc_guide', type: 'documented_in' },
+                { source: 'withdraw', target: 't1_arrival', type: 'option' },
+                { source: 'withdraw', target: 'realtime', type: 'option' },
+                { source: 'withdraw', target: 'limit', type: 'constrained_by' }
+            ]
+        };
+        
+        const typeColors = {
+            'concept': '#a78bfa',
+            'sop': '#22c55e',
+            'document': '#f472b6',
+            'event': '#96CEB4'
+        };
+        
+        let currentScale = 1;
+        let currentTranslate = { x: 0, y: 0 };
+        let nodePositions = {};
+        
+        function initGraph() {
+            const container = document.getElementById('graphContainer');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            graphData.nodes.forEach((node, i) => {
+                const angle = (i / graphData.nodes.length) * 2 * Math.PI;
+                const radius = Math.min(width, height) * 0.3;
+                nodePositions[node.id] = {
+                    x: width / 2 + radius * Math.cos(angle) + (Math.random() - 0.5) * 80,
+                    y: height / 2 + radius * Math.sin(angle) + (Math.random() - 0.5) * 80
+                };
+            });
+            
+            renderGraph();
+        }
+        
+        function renderGraph() {
+            const content = document.getElementById('graphContent');
+            content.innerHTML = '';
+            
+            // 绘制边
+            const edgesGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            graphData.edges.forEach(edge => {
+                const source = nodePositions[edge.source];
+                const target = nodePositions[edge.target];
+                if (!source || !target) return;
+                
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', source.x);
+                line.setAttribute('y1', source.y);
+                line.setAttribute('x2', target.x);
+                line.setAttribute('y2', target.y);
+                line.setAttribute('class', 'edge-line');
+                line.setAttribute('marker-end', 'url(#arrowhead)');
+                edgesGroup.appendChild(line);
+            });
+            content.appendChild(edgesGroup);
+            
+            // 绘制节点
+            const nodesGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            graphData.nodes.forEach(node => {
+                const pos = nodePositions[node.id];
+                const color = typeColors[node.type] || '#71717a';
+                
+                const nodeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                nodeGroup.setAttribute('transform', `translate(${pos.x}, ${pos.y})`);
+                
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('r', node.type === 'sop' ? 25 : 20);
+                circle.setAttribute('fill', color);
+                circle.setAttribute('class', 'node-circle');
+                circle.setAttribute('stroke', '#09090b');
+                circle.setAttribute('stroke-width', '2');
+                
+                const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                label.setAttribute('y', 35);
+                label.setAttribute('class', 'node-label');
+                label.setAttribute('text-anchor', 'middle');
+                label.textContent = node.name.length > 8 ? node.name.substring(0, 8) + '...' : node.name;
+                
+                nodeGroup.appendChild(circle);
+                nodeGroup.appendChild(label);
+                nodesGroup.appendChild(nodeGroup);
+            });
+            content.appendChild(nodesGroup);
+            
+            content.setAttribute('transform', `translate(${currentTranslate.x}, ${currentTranslate.y}) scale(${currentScale})`);
+        }
+        
+        function zoomIn() {
+            currentScale = Math.min(currentScale * 1.2, 3);
+            renderGraph();
+        }
+        
+        function zoomOut() {
+            currentScale = Math.max(currentScale / 1.2, 0.3);
+            renderGraph();
+        }
+        
+        function resetZoom() {
+            currentScale = 1;
+            currentTranslate = { x: 0, y: 0 };
+            renderGraph();
+        }
+        
+        function refreshGraph() {
+            initGraph();
+        }
+        
+        function switchPanelTab(element, panelId) {
+            document.querySelectorAll('.panel-tab').forEach(tab => tab.classList.remove('active'));
+            element.classList.add('active');
+            
+            document.querySelectorAll('.panel-content').forEach(panel => panel.style.display = 'none');
+            document.getElementById(panelId + '-panel').style.display = 'block';
+        }
+        
+        function showNodeModal() {
+            document.getElementById('nodeModal').classList.add('visible');
+        }
+        
+        function hideNodeModal() {
+            document.getElementById('nodeModal').classList.remove('visible');
+        }
+        
+        // 更新模式选择
+        document.querySelectorAll('.update-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.update-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        window.addEventListener('load', initGraph);
+        window.addEventListener('resize', initGraph);
+    </script>
+</body>
+</html>

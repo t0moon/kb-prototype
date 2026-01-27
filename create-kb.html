@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>创建知识库 - 原型图</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #09090b;
+      --bg-secondary: #18181b;
+      --bg-tertiary: #27272a;
+      --bg-elevated: #3f3f46;
+      --border-default: #3f3f46;
+      --border-subtle: #27272a;
+      --border-accent: #6366f1;
+      --text-primary: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --accent-primary: #6366f1;
+      --accent-success: #22c55e;
+      --accent-warning: #f59e0b;
+      --accent-error: #ef4444;
+      --accent-info: #0ea5e9;
+      --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --transition-fast: 150ms ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', 'Noto Sans SC', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* 顶部导航 */
+    .top-nav {
+      height: 56px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-default);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+    }
+
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .nav-back:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-title {
+      margin-left: 24px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    /* 主容器 */
+    .main-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .page-header {
+      margin-bottom: 40px;
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .page-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    /* 步骤指示器 */
+    .stepper {
+      display: flex;
+      justify-content: center;
+      padding: 32px 0;
+      margin-bottom: 40px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step-connector {
+      width: 100px;
+      height: 2px;
+      background: var(--border-default);
+      margin: 0 16px;
+    }
+
+    .step-connector.completed {
+      background: var(--accent-primary);
+    }
+
+    .step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-default);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 600;
+      transition: var(--transition-fast);
+    }
+
+    .step.active .step-circle {
+      background: var(--gradient-primary);
+      border-color: transparent;
+      color: white;
+    }
+
+    .step.completed .step-circle {
+      background: var(--accent-success);
+      border-color: transparent;
+      color: white;
+    }
+
+    .step-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .step.active .step-label,
+    .step.completed .step-label {
+      color: var(--text-primary);
+    }
+
+    .step-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* 内容卡片 */
+    .content-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-title-icon {
+      font-size: 20px;
+    }
+
+    /* 表单 */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .form-row.full {
+      grid-template-columns: 1fr;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+
+    .form-label .required {
+      color: var(--accent-error);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition-fast);
+    }
+
+    .form-input:focus {
+      border-color: var(--accent-primary);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .form-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* 标签选择器 */
+    .tag-section {
+      margin-bottom: 24px;
+    }
+
+    .tag-section-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .tag-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag-item {
+      padding: 10px 18px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .tag-item:hover {
+      border-color: var(--accent-primary);
+      color: var(--text-primary);
+    }
+
+    .tag-item.selected {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .tag-item .icon {
+      margin-right: 6px;
+    }
+
+    /* 业务场景标签（二级） */
+    .scene-tags {
+      margin-top: 16px;
+      padding: 16px;
+      background: var(--bg-primary);
+      border-radius: var(--radius-md);
+      display: none;
+    }
+
+    .scene-tags.visible {
+      display: block;
+    }
+
+    .scene-tags-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .scene-tag {
+      padding: 8px 14px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .scene-tag:hover {
+      border-color: var(--accent-info);
+    }
+
+    .scene-tag.selected {
+      background: rgba(14, 165, 233, 0.15);
+      border-color: var(--accent-info);
+      color: var(--accent-info);
+    }
+
+    /* 版本管理区域 */
+    .version-section {
+      background: var(--bg-primary);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-top: 24px;
+    }
+
+    .version-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .version-title {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .version-badge {
+      padding: 4px 10px;
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent-success);
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .version-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .version-btn {
+      padding: 8px 14px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .version-btn:hover {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+    }
+
+    .version-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .version-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .version-item:hover {
+      background: var(--bg-elevated);
+    }
+
+    .version-item.current {
+      border-left: 3px solid var(--accent-primary);
+    }
+
+    .version-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .version-number {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .version-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .version-item-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .version-status {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .version-status.active {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent-success);
+    }
+
+    .version-status.draft {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-warning);
+    }
+
+    .rollback-btn {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 12px;
+      cursor: pointer;
+      opacity: 0;
+      transition: var(--transition-fast);
+    }
+
+    .version-item:hover .rollback-btn {
+      opacity: 1;
+    }
+
+    .rollback-btn:hover {
+      border-color: var(--accent-warning);
+      color: var(--accent-warning);
+    }
+
+    /* 知识库列表 */
+    .kb-list-section {
+      margin-top: 32px;
+    }
+
+    .kb-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .kb-list-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .kb-search {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .kb-search-input {
+      padding: 10px 16px 10px 40px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 14px;
+      width: 280px;
+      position: relative;
+    }
+
+    .kb-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .kb-table th {
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .kb-table td {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 14px;
+    }
+
+    .kb-table tr:hover td {
+      background: var(--bg-tertiary);
+    }
+
+    .kb-name-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .kb-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .kb-name {
+      font-weight: 500;
+    }
+
+    .kb-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .kb-tags {
+      display: flex;
+      gap: 6px;
+    }
+
+    .kb-tag {
+      padding: 4px 10px;
+      background: var(--bg-elevated);
+      border-radius: 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .kb-tag.business {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--accent-primary);
+    }
+
+    .kb-tag.scene {
+      background: rgba(14, 165, 233, 0.15);
+      color: var(--accent-info);
+    }
+
+    .kb-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .status-dot.online {
+      background: var(--accent-success);
+    }
+
+    .status-dot.offline {
+      background: var(--text-muted);
+    }
+
+    .kb-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .kb-action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      border: 1px solid var(--border-default);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-fast);
+    }
+
+    .kb-action-btn:hover {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+    }
+
+    /* 底部按钮 */
+    .footer-actions {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 32px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      border: none;
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-default);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-elevated);
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* 模态框 */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.visible {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 500px;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .modal-close:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .modal-content {
+      padding: 24px;
+    }
+
+    .modal-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* 版本对比 */
+    .version-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .compare-panel {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    .compare-panel-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .compare-content {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .compare-content .added {
+      background: rgba(34, 197, 94, 0.2);
+      color: var(--accent-success);
+      padding: 0 4px;
+      border-radius: 2px;
+    }
+
+    .compare-content .removed {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--accent-error);
+      padding: 0 4px;
+      border-radius: 2px;
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <nav class="top-nav">
+    <a href="index.html" class="nav-back">
+      <span>←</span>
+      <span>返回知识库列表</span>
+    </a>
+    <span class="nav-title">创建知识库</span>
+  </nav>
+
+  <div class="main-container">
+    <!-- 页面标题 -->
+    <div class="page-header">
+      <h1 class="page-title">📚 创建知识库</h1>
+      <p class="page-desc">设置知识库基本信息、业务分类和版本管理</p>
+    </div>
+
+    <!-- 步骤指示器 -->
+    <div class="stepper">
+      <div class="step active">
+        <div class="step-circle">1</div>
+        <div class="step-info">
+          <div class="step-label">基本信息</div>
+          <div class="step-desc">名称与分类</div>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-circle">2</div>
+        <div class="step-info">
+          <div class="step-label">数据源</div>
+          <div class="step-desc">上传文件</div>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-circle">3</div>
+        <div class="step-info">
+          <div class="step-label">处理配置</div>
+          <div class="step-desc">分段与索引</div>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-circle">4</div>
+        <div class="step-info">
+          <div class="step-label">完成</div>
+          <div class="step-desc">发布上线</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 基本信息卡片 -->
+    <div class="content-card">
+      <h3 class="card-title">
+        <span class="card-title-icon">📝</span>
+        基本信息
+      </h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">
+            知识库名称
+            <span class="required">*</span>
+          </label>
+          <input type="text" class="form-input" placeholder="输入知识库名称..." value="客服-提现问题知识库" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">知识库图标</label>
+          <select class="form-select">
+            <option>📚 默认图标</option>
+            <option>💬 客服图标</option>
+            <option>💎 VIP图标</option>
+            <option>📢 广告图标</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-group">
+          <label class="form-label">描述</label>
+          <textarea class="form-input form-textarea" placeholder="简要描述这个知识库的用途...">包含用户提现相关的常见问题、操作流程和故障排查指南，用于客服机器人自动回复。</textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 业务分类卡片 -->
+    <div class="content-card">
+      <h3 class="card-title">
+        <span class="card-title-icon">🏷️</span>
+        业务分类
+      </h3>
+
+      <!-- 一级标签：业务 -->
+      <div class="tag-section">
+        <div class="tag-section-title">选择业务领域（一级分类）</div>
+        <div class="tag-grid">
+          <div class="tag-item selected" onclick="selectBusiness(this, 'service')">
+            <span class="icon">💬</span>客服
+          </div>
+          <div class="tag-item" onclick="selectBusiness(this, 'vip')">
+            <span class="icon">💎</span>VIP
+          </div>
+          <div class="tag-item" onclick="selectBusiness(this, 'ad')">
+            <span class="icon">📢</span>广告
+          </div>
+          <div class="tag-item" onclick="selectBusiness(this, 'payment')">
+            <span class="icon">💳</span>支付
+          </div>
+          <div class="tag-item" onclick="selectBusiness(this, 'content')">
+            <span class="icon">📱</span>内容
+          </div>
+          <div class="tag-item" onclick="selectBusiness(this, 'other')">
+            <span class="icon">📦</span>其他
+          </div>
+        </div>
+
+        <!-- 二级标签：业务场景 -->
+        <div class="scene-tags visible" id="service-scenes">
+          <div class="scene-tags-label">选择业务场景（二级分类）</div>
+          <div class="tag-grid">
+            <div class="scene-tag selected">提现</div>
+            <div class="scene-tag">充值</div>
+            <div class="scene-tag">账户问题</div>
+            <div class="scene-tag">订单查询</div>
+            <div class="scene-tag">退款</div>
+            <div class="scene-tag">投诉建议</div>
+            <div class="scene-tag">+ 添加场景</div>
+          </div>
+        </div>
+
+        <div class="scene-tags" id="vip-scenes">
+          <div class="scene-tags-label">选择业务场景（二级分类）</div>
+          <div class="tag-grid">
+            <div class="scene-tag">会员开通</div>
+            <div class="scene-tag">权益说明</div>
+            <div class="scene-tag">续费问题</div>
+            <div class="scene-tag">等级规则</div>
+            <div class="scene-tag">+ 添加场景</div>
+          </div>
+        </div>
+
+        <div class="scene-tags" id="ad-scenes">
+          <div class="scene-tags-label">选择业务场景（二级分类）</div>
+          <div class="tag-grid">
+            <div class="scene-tag">投放咨询</div>
+            <div class="scene-tag">账户管理</div>
+            <div class="scene-tag">数据报表</div>
+            <div class="scene-tag">素材审核</div>
+            <div class="scene-tag">+ 添加场景</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 版本管理卡片 -->
+    <div class="content-card">
+      <h3 class="card-title">
+        <span class="card-title-icon">📋</span>
+        版本管理
+      </h3>
+
+      <div class="version-section">
+        <div class="version-header">
+          <div class="version-title">
+            <span>版本历史</span>
+            <span class="version-badge">3 个版本</span>
+          </div>
+          <div class="version-actions">
+            <button class="version-btn" onclick="showCompareModal()">📊 版本对比</button>
+            <button class="version-btn">📤 导出版本</button>
+          </div>
+        </div>
+
+        <div class="version-list">
+          <div class="version-item current">
+            <div class="version-item-left">
+              <span class="version-number">v1.2.0</span>
+              <span class="version-meta">当前版本 · 2026-01-27 14:30 · 张三</span>
+            </div>
+            <div class="version-item-right">
+              <span class="version-status active">已发布</span>
+            </div>
+          </div>
+          <div class="version-item">
+            <div class="version-item-left">
+              <span class="version-number">v1.1.0</span>
+              <span class="version-meta">2026-01-25 10:15 · 李四</span>
+            </div>
+            <div class="version-item-right">
+              <button class="rollback-btn">回滚到此版本</button>
+            </div>
+          </div>
+          <div class="version-item">
+            <div class="version-item-left">
+              <span class="version-number">v1.0.0</span>
+              <span class="version-meta">初始版本 · 2026-01-20 09:00 · 王五</span>
+            </div>
+            <div class="version-item-right">
+              <button class="rollback-btn">回滚到此版本</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-top: 24px;">
+        <div class="form-group">
+          <label class="form-label">新版本号</label>
+          <input type="text" class="form-input" value="v1.3.0" />
+          <p class="form-hint">建议遵循语义化版本规范 (major.minor.patch)</p>
+        </div>
+        <div class="form-group">
+          <label class="form-label">版本备注</label>
+          <input type="text" class="form-input" placeholder="描述本次版本变更内容..." />
+        </div>
+      </div>
+    </div>
+
+    <!-- 知识库列表 -->
+    <div class="content-card">
+      <h3 class="card-title">
+        <span class="card-title-icon">📂</span>
+        现有知识库
+      </h3>
+
+      <div class="kb-list-header">
+        <div class="kb-search">
+          <input type="text" class="kb-search-input" placeholder="🔍 搜索知识库..." />
+          <select class="form-select" style="width: 150px;">
+            <option>全部业务</option>
+            <option>客服</option>
+            <option>VIP</option>
+            <option>广告</option>
+          </select>
+        </div>
+        <button class="btn btn-primary">
+          <span>+</span>
+          <span>新建知识库</span>
+        </button>
+      </div>
+
+      <table class="kb-table">
+        <thead>
+          <tr>
+            <th>知识库名称</th>
+            <th>业务分类</th>
+            <th>版本</th>
+            <th>状态</th>
+            <th>更新时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="kb-name-cell">
+                <div class="kb-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">💬</div>
+                <div>
+                  <div class="kb-name">客服-提现问题知识库</div>
+                  <div class="kb-desc">提现相关常见问题</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="kb-tags">
+                <span class="kb-tag business">客服</span>
+                <span class="kb-tag scene">提现</span>
+              </div>
+            </td>
+            <td>v1.2.0</td>
+            <td>
+              <div class="kb-status">
+                <span class="status-dot online"></span>
+                <span>在线</span>
+              </div>
+            </td>
+            <td>5 分钟前</td>
+            <td>
+              <div class="kb-actions">
+                <button class="kb-action-btn">✏️</button>
+                <button class="kb-action-btn">📋</button>
+                <button class="kb-action-btn">🗑️</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="kb-name-cell">
+                <div class="kb-icon" style="background: linear-gradient(135deg, #22c55e, #10b981);">💎</div>
+                <div>
+                  <div class="kb-name">VIP会员权益知识库</div>
+                  <div class="kb-desc">会员等级与权益说明</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="kb-tags">
+                <span class="kb-tag business">VIP</span>
+                <span class="kb-tag scene">权益说明</span>
+              </div>
+            </td>
+            <td>v2.0.1</td>
+            <td>
+              <div class="kb-status">
+                <span class="status-dot online"></span>
+                <span>在线</span>
+              </div>
+            </td>
+            <td>2 小时前</td>
+            <td>
+              <div class="kb-actions">
+                <button class="kb-action-btn">✏️</button>
+                <button class="kb-action-btn">📋</button>
+                <button class="kb-action-btn">🗑️</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="kb-name-cell">
+                <div class="kb-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">📢</div>
+                <div>
+                  <div class="kb-name">广告投放指南</div>
+                  <div class="kb-desc">广告投放操作与规范</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="kb-tags">
+                <span class="kb-tag business">广告</span>
+                <span class="kb-tag scene">投放咨询</span>
+              </div>
+            </td>
+            <td>v1.0.0</td>
+            <td>
+              <div class="kb-status">
+                <span class="status-dot offline"></span>
+                <span>草稿</span>
+              </div>
+            </td>
+            <td>1 天前</td>
+            <td>
+              <div class="kb-actions">
+                <button class="kb-action-btn">✏️</button>
+                <button class="kb-action-btn">📋</button>
+                <button class="kb-action-btn">🗑️</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 底部操作按钮 -->
+    <div class="footer-actions">
+      <button class="btn btn-secondary">取消</button>
+      <div class="btn-group">
+        <button class="btn btn-secondary">保存草稿</button>
+        <button class="btn btn-primary">
+          <span>下一步</span>
+          <span>→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 版本对比模态框 -->
+  <div class="modal-overlay" id="compareModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">📊 版本对比</h3>
+        <button class="modal-close" onclick="hideCompareModal()">✕</button>
+      </div>
+      <div class="modal-content">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">选择版本 A</label>
+            <select class="form-select">
+              <option>v1.2.0 (当前)</option>
+              <option>v1.1.0</option>
+              <option>v1.0.0</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">选择版本 B</label>
+            <select class="form-select">
+              <option>v1.1.0</option>
+              <option>v1.0.0</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="version-compare">
+          <div class="compare-panel">
+            <div class="compare-panel-title">v1.2.0 (当前版本)</div>
+            <div class="compare-content">
+              <p>• 新增 <span class="added">提现失败原因说明</span> 文档</p>
+              <p>• 更新 提现操作流程图</p>
+              <p>• 新增 <span class="added">银行卡限额说明</span></p>
+              <p>• 共 156 个分段</p>
+            </div>
+          </div>
+          <div class="compare-panel">
+            <div class="compare-panel-title">v1.1.0</div>
+            <div class="compare-content">
+              <p>• <span class="removed">删除了旧版提现说明</span></p>
+              <p>• 提现操作流程图（旧版）</p>
+              <p>• 共 142 个分段</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="hideCompareModal()">关闭</button>
+        <button class="btn btn-primary">应用 v1.1.0</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function selectBusiness(element, businessId) {
+      // 移除所有选中状态
+      document.querySelectorAll('.tag-item').forEach(tag => {
+        tag.classList.remove('selected');
+      });
+      element.classList.add('selected');
+
+      // 隐藏所有二级场景
+      document.querySelectorAll('.scene-tags').forEach(scene => {
+        scene.classList.remove('visible');
+      });
+
+      // 显示对应的二级场景
+      const sceneContainer = document.getElementById(businessId + '-scenes');
+      if (sceneContainer) {
+        sceneContainer.classList.add('visible');
+      }
+    }
+
+    function showCompareModal() {
+      document.getElementById('compareModal').classList.add('visible');
+    }
+
+    function hideCompareModal() {
+      document.getElementById('compareModal').classList.remove('visible');
+    }
+
+    // 场景标签点击
+    document.querySelectorAll('.scene-tag').forEach(tag => {
+      tag.addEventListener('click', function() {
+        if (!this.textContent.includes('添加')) {
+          this.classList.toggle('selected');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
