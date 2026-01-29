@@ -76,34 +76,6 @@
       font-weight: 600;
     }
 
-    .nav-tabs {
-      display: flex;
-      gap: 4px;
-      margin-left: 24px;
-    }
-
-    .nav-tab {
-      padding: 8px 16px;
-      border-radius: var(--radius-md);
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      transition: var(--transition-fast);
-    }
-
-    .nav-tab:hover {
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
-    }
-
-    .nav-tab.active {
-      background: var(--bg-tertiary);
-      color: var(--accent-primary);
-    }
-
     .nav-right {
       display: flex;
       gap: 12px;
@@ -142,49 +114,94 @@
       font-size: 13px;
     }
 
-    /* 主容器 */
+    /* 主容器 - 左右布局 */
     .main-container {
       display: flex;
       height: calc(100vh - 56px);
     }
 
-    /* 左侧内容区 */
+    /* 左侧导航 */
+    .side-nav {
+      width: 240px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-default);
+      padding: 20px 0;
+      flex-shrink: 0;
+    }
+
+    .nav-section {
+      margin-bottom: 24px;
+    }
+
+    .nav-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 20px;
+      margin-bottom: 12px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      border-left: 3px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .nav-item.active {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--accent-primary);
+      border-left-color: var(--accent-primary);
+    }
+
+    .nav-item-icon {
+      font-size: 18px;
+    }
+
+    .nav-item-badge {
+      margin-left: auto;
+      padding: 2px 8px;
+      background: var(--bg-elevated);
+      border-radius: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* 内容区 */
     .content-area {
       flex: 1;
       overflow-y: auto;
       padding: 32px;
     }
 
-    /* 模块标签页 */
-    .module-tabs {
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
       display: flex;
-      gap: 8px;
-      margin-bottom: 24px;
-      padding: 4px;
-      background: var(--bg-secondary);
-      border-radius: var(--radius-lg);
-      width: fit-content;
+      align-items: center;
+      gap: 12px;
     }
 
-    .module-tab {
-      padding: 12px 24px;
-      border-radius: var(--radius-md);
+    .page-desc {
       font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      transition: var(--transition-fast);
-    }
-
-    .module-tab:hover {
-      color: var(--text-primary);
-    }
-
-    .module-tab.active {
-      background: var(--gradient-primary);
-      color: white;
+      color: var(--text-muted);
     }
 
     /* 内容卡片 */
@@ -204,7 +221,7 @@
     }
 
     .card-title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       display: flex;
       align-items: center;
@@ -216,75 +233,96 @@
       gap: 10px;
     }
 
-    /* 统计卡片 */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+    /* 测试模式切换 */
+    .test-mode-tabs {
+      display: flex;
+      gap: 0;
       margin-bottom: 24px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-lg);
+      padding: 4px;
     }
 
-    .stat-card {
+    .test-mode-tab {
+      flex: 1;
+      padding: 14px 24px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      border-radius: var(--radius-md);
+      transition: var(--transition-fast);
+    }
+
+    .test-mode-tab:hover {
+      color: var(--text-primary);
+    }
+
+    .test-mode-tab.active {
       background: var(--bg-secondary);
-      border: 1px solid var(--border-default);
+      color: var(--accent-primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 单条测试区域 */
+    .single-test-area {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 24px;
+    }
+
+    .query-input-section {
+      background: var(--bg-primary);
       border-radius: var(--radius-lg);
       padding: 20px;
     }
 
-    .stat-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .stat-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-
-    .stat-change {
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 12px;
-    }
-
-    .stat-change.positive {
-      background: rgba(34, 197, 94, 0.15);
-      color: var(--accent-success);
-    }
-
-    .stat-value {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .stat-label {
+    .query-label {
       font-size: 14px;
-      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    /* 测试配置区 */
-    .test-config {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
+    .query-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 15px;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
     }
 
-    .config-section {
+    .query-textarea:focus {
+      border-color: var(--accent-primary);
+    }
+
+    .query-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    /* 配置面板 */
+    .config-panel {
       background: var(--bg-primary);
       border-radius: var(--radius-lg);
       padding: 20px;
     }
 
     .config-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       margin-bottom: 16px;
       display: flex;
@@ -292,25 +330,18 @@
       gap: 8px;
     }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .config-group {
       margin-bottom: 16px;
     }
 
-    .form-group {
-      margin-bottom: 0;
-    }
-
-    .form-label {
+    .config-label {
       font-size: 13px;
       color: var(--text-muted);
       margin-bottom: 8px;
       display: block;
     }
 
-    .form-input, .form-select {
+    .config-select, .config-input {
       width: 100%;
       padding: 10px 14px;
       background: var(--bg-tertiary);
@@ -321,279 +352,123 @@
       outline: none;
     }
 
-    .form-input:focus, .form-select:focus {
+    .config-select:focus, .config-input:focus {
       border-color: var(--accent-primary);
     }
 
-    .form-textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    /* 搜索框 */
-    .search-box {
-      display: flex;
+    .config-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 20px;
     }
 
-    .search-input-wrapper {
-      flex: 1;
-      position: relative;
+    /* 批量测试区域 */
+    .batch-test-area {
+      display: none;
     }
 
-    .search-input {
-      width: 100%;
-      padding: 14px 18px 14px 46px;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-lg);
-      color: var(--text-primary);
-      font-size: 15px;
-      outline: none;
+    .batch-test-area.active {
+      display: block;
     }
 
-    .search-input:focus {
-      border-color: var(--accent-primary);
+    .single-test-area.hidden {
+      display: none;
     }
 
-    .search-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 18px;
-      color: var(--text-muted);
-    }
-
-    .search-btn {
-      padding: 14px 28px;
-      background: var(--gradient-primary);
-      border: none;
-      border-radius: var(--radius-lg);
-      color: white;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    /* 上传区域 */
-    .upload-area {
+    .upload-zone {
       border: 2px dashed var(--border-default);
       border-radius: var(--radius-lg);
-      padding: 40px;
+      padding: 48px;
       text-align: center;
       cursor: pointer;
       transition: var(--transition-fast);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
-    .upload-area:hover {
+    .upload-zone:hover {
       border-color: var(--accent-primary);
       background: rgba(99, 102, 241, 0.05);
     }
 
     .upload-icon {
-      font-size: 40px;
-      margin-bottom: 12px;
+      font-size: 48px;
+      margin-bottom: 16px;
     }
 
     .upload-title {
       font-size: 16px;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .upload-desc {
       font-size: 14px;
       color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .upload-formats {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .format-tag {
+      padding: 4px 12px;
+      background: var(--bg-tertiary);
+      border-radius: 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
     }
 
     /* 进度条 */
-    .progress-bar {
+    .progress-section {
       background: var(--bg-primary);
-      border-radius: 4px;
-      height: 8px;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .progress-title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .progress-status {
+      font-size: 13px;
+      color: var(--accent-primary);
+    }
+
+    .progress-bar {
+      background: var(--bg-tertiary);
+      border-radius: 6px;
+      height: 12px;
       overflow: hidden;
-      margin: 16px 0;
     }
 
     .progress-fill {
       height: 100%;
       background: var(--gradient-primary);
-      border-radius: 4px;
+      border-radius: 6px;
       transition: width 0.3s ease;
     }
 
     .progress-info {
       display: flex;
       justify-content: space-between;
+      margin-top: 12px;
       font-size: 13px;
       color: var(--text-muted);
     }
 
-    /* 结果列表 */
-    .result-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .result-item {
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      transition: var(--transition-fast);
-    }
-
-    .result-item:hover {
-      border-color: var(--accent-primary);
-    }
-
-    .result-rank {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 14px;
-    }
-
-    .rank-badge {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .rank-badge.top1 {
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      color: #000;
-    }
-
-    .rank-badge.top2 {
-      background: linear-gradient(135deg, #94a3b8, #64748b);
-      color: #fff;
-    }
-
-    .rank-badge.top3 {
-      background: linear-gradient(135deg, #cd7f32, #b87333);
-      color: #fff;
-    }
-
-    .rank-badge.other {
-      background: var(--bg-elevated);
-      color: var(--text-secondary);
-    }
-
-    .result-doc-info {
-      flex: 1;
-    }
-
-    .result-doc-name {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .result-doc-path {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .result-score {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .score-value {
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-size: 15px;
-      font-weight: 600;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .score-value.high {
-      background: rgba(34, 197, 94, 0.15);
-      color: var(--accent-success);
-    }
-
-    .score-value.medium {
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--accent-warning);
-    }
-
-    .score-value.low {
-      background: rgba(239, 68, 68, 0.15);
-      color: var(--accent-error);
-    }
-
-    .result-content {
-      background: var(--bg-secondary);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin-bottom: 14px;
-    }
-
-    .result-content-text {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-
-    .result-content .highlight {
-      background: rgba(245, 158, 11, 0.25);
-      color: var(--accent-warning);
-      padding: 1px 4px;
-      border-radius: 3px;
-    }
-
-    .result-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .result-tags {
-      display: flex;
-      gap: 8px;
-    }
-
-    .result-tag {
-      padding: 4px 10px;
-      background: var(--bg-secondary);
-      border-radius: 12px;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .result-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .result-btn {
-      padding: 8px 14px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-sm);
-      color: var(--text-secondary);
-      font-size: 13px;
-      cursor: pointer;
-    }
-
-    .result-btn:hover {
-      background: var(--bg-elevated);
-      color: var(--text-primary);
-    }
-
-    /* 批量测试表格 */
+    /* 批量结果表格 */
     .batch-table {
       width: 100%;
       border-collapse: collapse;
@@ -607,10 +482,11 @@
       color: var(--text-muted);
       text-transform: uppercase;
       border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-primary);
     }
 
     .batch-table td {
-      padding: 14px 16px;
+      padding: 16px;
       border-bottom: 1px solid var(--border-subtle);
       font-size: 14px;
     }
@@ -619,7 +495,22 @@
       background: var(--bg-tertiary);
     }
 
+    .query-cell {
+      max-width: 400px;
+    }
+
+    .query-text {
+      font-weight: 500;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .hit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       padding: 6px 12px;
       border-radius: 20px;
       font-size: 12px;
@@ -641,405 +532,360 @@
       color: var(--accent-error);
     }
 
-    /* 右侧面板 */
-    .side-panel {
-      width: 380px;
-      background: var(--bg-secondary);
-      border-left: 1px solid var(--border-default);
-      overflow-y: auto;
-      flex-shrink: 0;
+    .score-cell {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
     }
 
-    .panel-header {
-      padding: 20px;
-      border-bottom: 1px solid var(--border-subtle);
+    .score-cell.high { color: var(--accent-success); }
+    .score-cell.medium { color: var(--accent-warning); }
+    .score-cell.low { color: var(--accent-error); }
+
+    /* 命中结果展示 */
+    .result-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    .panel-title {
-      font-size: 16px;
+    .result-card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .result-card:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--bg-elevated);
+    }
+
+    .result-rank {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .result-rank.top1 {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #000;
+    }
+
+    .result-rank.top2 {
+      background: linear-gradient(135deg, #94a3b8, #64748b);
+      color: #fff;
+    }
+
+    .result-rank.top3 {
+      background: linear-gradient(135deg, #cd7f32, #b87333);
+      color: #fff;
+    }
+
+    .result-rank.other {
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+    }
+
+    .result-doc {
+      flex: 1;
+    }
+
+    .result-doc-name {
+      font-size: 15px;
       font-weight: 600;
       margin-bottom: 4px;
     }
 
-    .panel-subtitle {
-      font-size: 13px;
+    .result-doc-path {
+      font-size: 12px;
       color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    .panel-tabs {
-      display: flex;
-      padding: 0 20px;
-      border-bottom: 1px solid var(--border-subtle);
+    .result-score {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    .panel-tab {
-      padding: 14px 16px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-muted);
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
+    .result-score.high {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent-success);
     }
 
-    .panel-tab:hover {
-      color: var(--text-primary);
+    .result-score.medium {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-warning);
     }
 
-    .panel-tab.active {
-      color: var(--accent-primary);
-      border-bottom-color: var(--accent-primary);
-    }
-
-    .panel-content {
+    .result-body {
       padding: 20px;
     }
 
-    .panel-section {
-      margin-bottom: 24px;
-    }
-
-    .panel-section-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-
-    /* 评测指标 */
-    .eval-metrics {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .metric-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px;
-      background: var(--bg-tertiary);
+    .chunk-content {
+      background: var(--bg-secondary);
       border-radius: var(--radius-md);
-    }
-
-    .metric-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-
-    .metric-info {
-      flex: 1;
-    }
-
-    .metric-name {
+      padding: 16px;
+      margin-bottom: 16px;
       font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 2px;
+      line-height: 1.8;
+      color: var(--text-secondary);
     }
 
-    .metric-desc {
+    .chunk-content .highlight {
+      background: rgba(245, 158, 11, 0.3);
+      color: var(--accent-warning);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .result-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .meta-tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    .meta-tag {
+      padding: 4px 10px;
+      background: var(--bg-secondary);
+      border-radius: 12px;
       font-size: 12px;
       color: var(--text-muted);
     }
 
-    .metric-value {
-      font-size: 20px;
+    .result-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      padding: 8px 14px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .action-btn:hover {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    /* 统计卡片网格 */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 32px;
       font-weight: 700;
+      margin-bottom: 4px;
     }
 
-    .metric-value.success {
-      color: var(--accent-success);
+    .stat-value.primary { color: var(--accent-primary); }
+    .stat-value.success { color: var(--accent-success); }
+    .stat-value.warning { color: var(--accent-warning); }
+    .stat-value.info { color: var(--accent-info); }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
     }
 
-    .metric-value.warning {
-      color: var(--accent-warning);
+    /* 筛选器 */
+    .filter-bar {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding: 16px;
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
     }
 
-    /* 历史记录 */
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-label {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .filter-select {
+      padding: 8px 12px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 13px;
+    }
+
+    /* 图表占位 */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .chart-card {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .chart-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chart-placeholder {
+      height: 200px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+
+    .chart-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    /* 历史列表 */
     .history-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .history-item {
-      padding: 14px;
-      background: var(--bg-tertiary);
-      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
       cursor: pointer;
       transition: var(--transition-fast);
     }
 
     .history-item:hover {
-      background: var(--bg-elevated);
+      background: var(--bg-tertiary);
     }
 
     .history-item.selected {
       border-left: 3px solid var(--accent-primary);
+      background: rgba(99, 102, 241, 0.1);
     }
 
-    .history-header {
+    .history-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .history-icon.batch {
+      background: rgba(99, 102, 241, 0.15);
+    }
+
+    .history-icon.single {
+      background: rgba(14, 165, 233, 0.15);
+    }
+
+    .history-info {
+      flex: 1;
     }
 
     .history-name {
       font-size: 14px;
-      font-weight: 500;
-    }
-
-    .history-badge {
-      padding: 4px 8px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    .history-badge.batch {
-      background: rgba(99, 102, 241, 0.15);
-      color: var(--accent-primary);
-    }
-
-    .history-badge.single {
-      background: rgba(14, 165, 233, 0.15);
-      color: var(--accent-info);
-    }
-
-    .history-meta {
-      display: flex;
-      gap: 12px;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .history-stat {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    /* 对比视图 */
-    .compare-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .compare-panel {
-      background: var(--bg-tertiary);
-      border-radius: var(--radius-lg);
-      padding: 16px;
-    }
-
-    .compare-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .compare-title {
-      font-size: 14px;
       font-weight: 600;
-    }
-
-    .compare-version {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* 图表占位 */
-    .chart-placeholder {
-      background: var(--bg-primary);
-      border-radius: var(--radius-md);
-      padding: 40px;
-      text-align: center;
-      color: var(--text-muted);
-    }
-
-    .chart-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-    }
-
-    /* 原文对照 */
-    .doc-compare {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .doc-panel {
-      background: var(--bg-tertiary);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-
-    .doc-panel-header {
-      padding: 14px 16px;
-      background: var(--bg-elevated);
-      font-size: 14px;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .doc-panel-content {
-      padding: 16px;
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--text-secondary);
-      max-height: 400px;
-      overflow-y: auto;
-    }
-
-    .doc-highlight {
-      background: rgba(99, 102, 241, 0.3);
-      border-left: 3px solid var(--accent-primary);
-      padding: 8px 12px;
-      margin: 8px 0;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    }
-
-    /* 评估模块内容 */
-    .eval-section {
-      background: var(--bg-primary);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      margin-bottom: 16px;
-    }
-
-    .eval-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .eval-title {
-      font-size: 15px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .eval-score-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .eval-score-card {
-      background: var(--bg-tertiary);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      text-align: center;
-    }
-
-    .eval-score-value {
-      font-size: 28px;
-      font-weight: 700;
       margin-bottom: 4px;
     }
 
-    .eval-score-label {
+    .history-meta {
       font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 16px;
+    }
+
+    .history-stats {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .history-stat {
+      text-align: center;
+    }
+
+    .history-stat-value {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .history-stat-label {
+      font-size: 11px;
       color: var(--text-muted);
     }
 
-    /* 标注面板 */
-    .annotate-panel {
-      background: var(--bg-tertiary);
-      border-radius: var(--radius-lg);
-      padding: 16px;
-    }
-
-    .annotate-options {
+    .history-actions {
       display: flex;
-      flex-direction: column;
       gap: 8px;
-      margin-bottom: 12px;
     }
 
-    .annotate-option {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: var(--transition-fast);
-    }
-
-    .annotate-option:hover {
-      border-color: var(--accent-primary);
-    }
-
-    .annotate-option.selected {
-      border-color: var(--accent-success);
-      background: rgba(34, 197, 94, 0.1);
-    }
-
-    .annotate-radio {
-      width: 18px;
-      height: 18px;
-      border: 2px solid var(--border-default);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .annotate-option.selected .annotate-radio {
-      border-color: var(--accent-success);
-    }
-
-    .annotate-option.selected .annotate-radio::after {
-      content: '';
-      width: 10px;
-      height: 10px;
-      background: var(--accent-success);
-      border-radius: 50%;
-    }
-
-    .annotate-text {
-      flex: 1;
-      font-size: 14px;
-    }
-
-    .annotate-submit {
-      width: 100%;
-      padding: 12px;
-      background: var(--accent-success);
-      border: none;
-      border-radius: var(--radius-md);
-      color: white;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-
-    /* 隐藏内容 */
-    .tab-content {
+    /* 模块内容切换 */
+    .module-content {
       display: none;
     }
 
-    .tab-content.active {
+    .module-content.active {
       display: block;
     }
   </style>
@@ -1063,787 +909,638 @@
         <span>📤</span>
         <span>导出报告</span>
       </button>
-      <button class="btn btn-primary">
-        <span>💾</span>
-        <span>保存测试</span>
-      </button>
     </div>
   </nav>
 
   <div class="main-container">
-    <!-- 主内容区 -->
-    <div class="content-area">
-      <!-- 模块切换 -->
-      <div class="module-tabs">
-        <button class="module-tab active" onclick="switchModule('test')">🧪 测试模块</button>
-        <button class="module-tab" onclick="switchModule('eval')">📈 评估模块</button>
+    <!-- 左侧导航 -->
+    <div class="side-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">一、测试模块</div>
+        <div class="nav-item active" onclick="showModule('query-test')">
+          <span class="nav-item-icon">🔍</span>
+          <span>Query 命中测试</span>
+        </div>
+        <div class="nav-item" onclick="showModule('result-display')">
+          <span class="nav-item-icon">📄</span>
+          <span>命中结果展示</span>
+        </div>
+        <div class="nav-item" onclick="showModule('hit-stats')">
+          <span class="nav-item-icon">📊</span>
+          <span>命中率统计</span>
+        </div>
+        <div class="nav-item" onclick="showModule('history')">
+          <span class="nav-item-icon">📋</span>
+          <span>历史回溯</span>
+          <span class="nav-item-badge">42</span>
+        </div>
       </div>
 
-      <!-- ========== 测试模块 ========== -->
-      <div class="tab-content active" id="test-module">
-        <!-- 统计卡片 -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-header">
-              <div class="stat-icon" style="background: rgba(99, 102, 241, 0.15);">🎯</div>
-              <span class="stat-change positive">↑ 5.2%</span>
-            </div>
-            <div class="stat-value">89.6%</div>
-            <div class="stat-label">Top-1 命中率</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-header">
-              <div class="stat-icon" style="background: rgba(34, 197, 94, 0.15);">📊</div>
-              <span class="stat-change positive">↑ 3.8%</span>
-            </div>
-            <div class="stat-value">94.2%</div>
-            <div class="stat-label">Top-3 命中率</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-header">
-              <div class="stat-icon" style="background: rgba(245, 158, 11, 0.15);">📈</div>
-            </div>
-            <div class="stat-value">0.86</div>
-            <div class="stat-label">平均相似度</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-header">
-              <div class="stat-icon" style="background: rgba(14, 165, 233, 0.15);">📝</div>
-            </div>
-            <div class="stat-value">1,256</div>
-            <div class="stat-label">累计测试次数</div>
-          </div>
+      <div class="nav-section">
+        <div class="nav-section-title">二、评估模块</div>
+        <div class="nav-item" onclick="showModule('context-eval')">
+          <span class="nav-item-icon">🎯</span>
+          <span>上下文质量评估</span>
+        </div>
+        <div class="nav-item" onclick="showModule('answer-eval')">
+          <span class="nav-item-icon">💬</span>
+          <span>回答质量评估</span>
+        </div>
+        <div class="nav-item" onclick="showModule('data-manage')">
+          <span class="nav-item-icon">💾</span>
+          <span>评测数据管理</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 内容区 -->
+    <div class="content-area">
+      <!-- ========== 1. Query 命中测试 ========== -->
+      <div class="module-content active" id="query-test">
+        <div class="page-header">
+          <h1 class="page-title">
+            <span>🔍</span>
+            Query 命中测试
+          </h1>
+          <p class="page-desc">支持单条和批量 Query 测试，验证知识库检索效果</p>
         </div>
 
-        <!-- 1. Query 命中测试 -->
         <div class="content-card">
-          <div class="card-header">
-            <h2 class="card-title">
-              <span>🔍</span>
-              Query 命中测试
-            </h2>
-            <div class="card-actions">
-              <button class="btn btn-secondary btn-sm" onclick="switchTestMode('single')">单条测试</button>
-              <button class="btn btn-secondary btn-sm" onclick="switchTestMode('batch')">批量测试</button>
-            </div>
+          <!-- 测试模式切换 -->
+          <div class="test-mode-tabs">
+            <button class="test-mode-tab active" onclick="switchTestMode('single')">
+              📝 单条测试
+            </button>
+            <button class="test-mode-tab" onclick="switchTestMode('batch')">
+              📋 批量测试
+            </button>
           </div>
 
           <!-- 单条测试 -->
-          <div class="test-mode-content" id="single-test">
-            <div class="search-box">
-              <div class="search-input-wrapper">
-                <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" placeholder="输入测试 Query..." value="提现到账时间是多久？为什么会提现失败？" />
+          <div class="single-test-area" id="single-test-area">
+            <div class="query-input-section">
+              <div class="query-label">
+                <span>📝</span>
+                <span>输入测试 Query</span>
               </div>
-              <button class="search-btn">开始测试</button>
+              <textarea class="query-textarea" placeholder="请输入要测试的查询问题...">提现到账时间是多久？为什么会提现失败？</textarea>
+              <div class="query-actions">
+                <button class="btn btn-secondary">清空</button>
+                <button class="btn btn-primary">
+                  <span>🚀</span>
+                  <span>开始测试</span>
+                </button>
+              </div>
             </div>
 
-            <div class="test-config">
-              <div class="config-section">
-                <div class="config-title">📋 测试参数</div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">Top K</label>
-                    <select class="form-select">
-                      <option>Top 1</option>
-                      <option>Top 3</option>
-                      <option selected>Top 5</option>
-                      <option>Top 10</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">相似度阈值</label>
-                    <input type="number" class="form-input" value="0.5" step="0.1" />
-                  </div>
-                </div>
+            <div class="config-panel">
+              <div class="config-title">
+                <span>⚙️</span>
+                <span>测试参数配置</span>
               </div>
-              <div class="config-section">
-                <div class="config-title">📚 检索范围</div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label">知识库</label>
-                    <select class="form-select">
-                      <option>全部知识库</option>
-                      <option selected>客服-提现问题</option>
-                      <option>VIP会员权益</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">文档范围</label>
-                    <select class="form-select">
-                      <option selected>全部文档</option>
-                      <option>提现操作指南.pdf</option>
-                      <option>常见问题FAQ.md</option>
-                    </select>
-                  </div>
-                </div>
+
+              <div class="config-group">
+                <label class="config-label">Top K 设置</label>
+                <select class="config-select">
+                  <option>Top 1</option>
+                  <option>Top 3</option>
+                  <option selected>Top 5</option>
+                  <option>Top 10</option>
+                </select>
+              </div>
+
+              <div class="config-group">
+                <label class="config-label">相似度阈值</label>
+                <input type="number" class="config-input" value="0.5" step="0.05" min="0" max="1" />
+              </div>
+
+              <div class="config-group">
+                <label class="config-label">指定知识库</label>
+                <select class="config-select">
+                  <option>全部知识库</option>
+                  <option selected>客服-提现问题</option>
+                  <option>VIP会员权益</option>
+                  <option>广告投放指南</option>
+                </select>
+              </div>
+
+              <div class="config-group">
+                <label class="config-label">子知识库 / 分类</label>
+                <select class="config-select">
+                  <option selected>全部分类</option>
+                  <option>操作指南</option>
+                  <option>常见问题</option>
+                  <option>故障排查</option>
+                </select>
+              </div>
+
+              <div class="config-group">
+                <label class="config-label">指定文档范围</label>
+                <select class="config-select">
+                  <option selected>全部文档</option>
+                  <option>提现操作指南.pdf</option>
+                  <option>常见问题FAQ.md</option>
+                  <option>银行限额说明.xlsx</option>
+                </select>
               </div>
             </div>
           </div>
 
           <!-- 批量测试 -->
-          <div class="test-mode-content" id="batch-test" style="display: none;">
-            <div class="upload-area">
-              <div class="upload-icon">📄</div>
-              <div class="upload-title">上传测试集文件</div>
-              <div class="upload-desc">支持 CSV、Excel 格式，包含 Query 列</div>
+          <div class="batch-test-area" id="batch-test-area">
+            <div class="upload-zone">
+              <div class="upload-icon">📁</div>
+              <div class="upload-title">上传批量测试集</div>
+              <div class="upload-desc">拖拽文件到此处，或点击选择文件</div>
+              <div class="upload-formats">
+                <span class="format-tag">CSV</span>
+                <span class="format-tag">Excel (.xlsx)</span>
+              </div>
             </div>
 
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: 75%;"></div>
-            </div>
-            <div class="progress-info">
-              <span>已完成 75/100 条</span>
-              <span>预计剩余 2 分钟</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div>
+                <button class="btn btn-secondary btn-sm">📥 下载模板</button>
+              </div>
+              <div style="display: flex; gap: 12px;">
+                <button class="btn btn-secondary btn-sm">⏸️ 暂停</button>
+                <button class="btn btn-primary btn-sm">▶️ 开始批量测试</button>
+              </div>
             </div>
 
+            <!-- 进度显示 -->
+            <div class="progress-section">
+              <div class="progress-header">
+                <span class="progress-title">📊 批量测试进度</span>
+                <span class="progress-status">运行中...</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%;"></div>
+              </div>
+              <div class="progress-info">
+                <span>已完成 75 / 100 条</span>
+                <span>预计剩余 2 分钟</span>
+              </div>
+            </div>
+
+            <!-- 批量结果表格 -->
             <table class="batch-table">
               <thead>
                 <tr>
-                  <th style="width: 40px;">#</th>
+                  <th style="width: 50px;">#</th>
                   <th>测试 Query</th>
                   <th style="width: 120px;">命中状态</th>
                   <th style="width: 100px;">Top-1 分数</th>
-                  <th style="width: 80px;">操作</th>
+                  <th style="width: 100px;">Top-3 命中</th>
+                  <th style="width: 100px;">操作</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>1</td>
-                  <td>提现多久到账？</td>
+                  <td class="query-cell">
+                    <div class="query-text">提现多久到账？</div>
+                  </td>
                   <td><span class="hit-badge success">✓ 命中</span></td>
-                  <td><span style="color: var(--accent-success); font-weight: 600;">0.96</span></td>
-                  <td><button class="result-btn btn-sm">详情</button></td>
+                  <td class="score-cell high">0.96</td>
+                  <td class="score-cell high">3/3</td>
+                  <td><button class="action-btn">查看详情</button></td>
                 </tr>
                 <tr>
                   <td>2</td>
-                  <td>为什么提现失败了？</td>
+                  <td class="query-cell">
+                    <div class="query-text">为什么提现失败了？</div>
+                  </td>
                   <td><span class="hit-badge success">✓ 命中</span></td>
-                  <td><span style="color: var(--accent-success); font-weight: 600;">0.91</span></td>
-                  <td><button class="result-btn btn-sm">详情</button></td>
+                  <td class="score-cell high">0.91</td>
+                  <td class="score-cell high">3/3</td>
+                  <td><button class="action-btn">查看详情</button></td>
                 </tr>
                 <tr>
                   <td>3</td>
-                  <td>银行卡限额是多少？</td>
+                  <td class="query-cell">
+                    <div class="query-text">银行卡限额是多少？</div>
+                  </td>
                   <td><span class="hit-badge partial">△ 部分</span></td>
-                  <td><span style="color: var(--accent-warning); font-weight: 600;">0.72</span></td>
-                  <td><button class="result-btn btn-sm">详情</button></td>
+                  <td class="score-cell medium">0.72</td>
+                  <td class="score-cell medium">2/3</td>
+                  <td><button class="action-btn">查看详情</button></td>
                 </tr>
                 <tr>
                   <td>4</td>
-                  <td>如何修改提现银行卡？</td>
+                  <td class="query-cell">
+                    <div class="query-text">如何修改提现银行卡？</div>
+                  </td>
                   <td><span class="hit-badge fail">✗ 未命中</span></td>
-                  <td><span style="color: var(--accent-error); font-weight: 600;">0.38</span></td>
-                  <td><button class="result-btn btn-sm">详情</button></td>
+                  <td class="score-cell low">0.38</td>
+                  <td class="score-cell low">0/3</td>
+                  <td><button class="action-btn">查看详情</button></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td class="query-cell">
+                    <div class="query-text">提现手续费怎么算？</div>
+                  </td>
+                  <td><span class="hit-badge success">✓ 命中</span></td>
+                  <td class="score-cell high">0.88</td>
+                  <td class="score-cell high">3/3</td>
+                  <td><button class="action-btn">查看详情</button></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+      </div>
 
-        <!-- 2. 命中结果展示 -->
+      <!-- ========== 2. 命中结果展示 ========== -->
+      <div class="module-content" id="result-display">
+        <div class="page-header">
+          <h1 class="page-title">
+            <span>📄</span>
+            命中结果展示
+          </h1>
+          <p class="page-desc">按 TopK 顺序展示命中结果，支持查看 Chunk 详情和原文对照</p>
+        </div>
+
         <div class="content-card">
           <div class="card-header">
-            <h2 class="card-title">
-              <span>📄</span>
-              命中结果展示
-            </h2>
-            <span style="font-size: 14px; color: var(--text-muted);">共 5 条结果 · Top K = 5</span>
+            <div class="card-title">
+              <span>🔍</span>
+              <span>Query: "提现到账时间是多久？"</span>
+            </div>
+            <div class="card-actions">
+              <span style="font-size: 13px; color: var(--text-muted);">共 5 条结果 · Top K = 5</span>
+            </div>
           </div>
 
           <div class="result-list">
             <!-- Top 1 -->
-            <div class="result-item">
-              <div class="result-rank">
-                <div class="rank-badge top1">1</div>
-                <div class="result-doc-info">
+            <div class="result-card">
+              <div class="result-header">
+                <div class="result-rank top1">1</div>
+                <div class="result-doc">
                   <div class="result-doc-name">提现操作指南 v2.0.pdf</div>
-                  <div class="result-doc-path">客服-提现 / 操作指南 / 分段 #012</div>
+                  <div class="result-doc-path">客服-提现 / 操作指南 / 第 12 段</div>
                 </div>
-                <div class="result-score">
-                  <span class="score-value high">0.96</span>
-                </div>
+                <div class="result-score high">0.96</div>
               </div>
-              <div class="result-content">
-                <div class="result-content-text">
+              <div class="result-body">
+                <div class="chunk-content">
                   <span class="highlight">提现到账时间</span>说明：普通提现（T+1）将在申请后的下一个工作日24:00前到账；实时到账功能支持秒级到账。<span class="highlight">提现失败</span>常见原因包括：银行卡信息错误、超出限额、账户异常等...
                 </div>
-              </div>
-              <div class="result-meta">
-                <div class="result-tags">
-                  <span class="result-tag">📊 1,456 字符</span>
-                  <span class="result-tag">🔢 第 12 段</span>
-                  <span class="result-tag">👁️ 命中 156 次</span>
-                </div>
-                <div class="result-actions">
-                  <button class="result-btn" onclick="showDocCompare()">📄 对照原文</button>
-                  <button class="result-btn">📋 复制</button>
+                <div class="result-meta">
+                  <div class="meta-tags">
+                    <span class="meta-tag">📊 1,456 字符</span>
+                    <span class="meta-tag">🔢 第 12/45 段</span>
+                    <span class="meta-tag">👁️ 历史命中 156 次</span>
+                  </div>
+                  <div class="result-actions">
+                    <button class="action-btn">📄 对照原文</button>
+                    <button class="action-btn">📋 复制内容</button>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- Top 2 -->
-            <div class="result-item">
-              <div class="result-rank">
-                <div class="rank-badge top2">2</div>
-                <div class="result-doc-info">
+            <div class="result-card">
+              <div class="result-header">
+                <div class="result-rank top2">2</div>
+                <div class="result-doc">
                   <div class="result-doc-name">常见问题FAQ.md</div>
-                  <div class="result-doc-path">客服-提现 / FAQ / 分段 #003</div>
+                  <div class="result-doc-path">客服-提现 / FAQ / 第 3 段</div>
                 </div>
-                <div class="result-score">
-                  <span class="score-value high">0.91</span>
-                </div>
+                <div class="result-score high">0.91</div>
               </div>
-              <div class="result-content">
-                <div class="result-content-text">
+              <div class="result-body">
+                <div class="chunk-content">
                   Q: <span class="highlight">为什么提现失败</span>？<br>
                   A: 提现失败的常见原因包括：1. 银行卡号填写错误 2. 单笔或单日金额超过限额 3. 账户存在安全风险...
                 </div>
-              </div>
-              <div class="result-meta">
-                <div class="result-tags">
-                  <span class="result-tag">📊 892 字符</span>
-                  <span class="result-tag">🔢 第 3 段</span>
-                  <span class="result-tag">👁️ 命中 89 次</span>
-                </div>
-                <div class="result-actions">
-                  <button class="result-btn">📄 对照原文</button>
-                  <button class="result-btn">📋 复制</button>
+                <div class="result-meta">
+                  <div class="meta-tags">
+                    <span class="meta-tag">📊 892 字符</span>
+                    <span class="meta-tag">🔢 第 3/28 段</span>
+                  </div>
+                  <div class="result-actions">
+                    <button class="action-btn">📄 对照原文</button>
+                    <button class="action-btn">📋 复制内容</button>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- Top 3 -->
-            <div class="result-item">
-              <div class="result-rank">
-                <div class="rank-badge top3">3</div>
-                <div class="result-doc-info">
+            <div class="result-card">
+              <div class="result-header">
+                <div class="result-rank top3">3</div>
+                <div class="result-doc">
                   <div class="result-doc-name">银行限额说明.xlsx</div>
-                  <div class="result-doc-path">客服-提现 / 限额规则 / 分段 #001</div>
+                  <div class="result-doc-path">客服-提现 / 限额规则 / 第 1 段</div>
                 </div>
-                <div class="result-score">
-                  <span class="score-value medium">0.78</span>
-                </div>
+                <div class="result-score medium">0.78</div>
               </div>
-              <div class="result-content">
-                <div class="result-content-text">
-                  各银行提现限额一览表：工商银行单笔限额5万，单日限额20万；建设银行单笔限额3万，单日限额10万...
+              <div class="result-body">
+                <div class="chunk-content">
+                  各银行提现限额一览表：工商银行单笔限额5万，单日限额20万；建设银行单笔限额3万，单日限额10万；招商银行单笔限额2万，单日限额5万...
                 </div>
-              </div>
-              <div class="result-meta">
-                <div class="result-tags">
-                  <span class="result-tag">📊 654 字符</span>
-                  <span class="result-tag">🔢 第 1 段</span>
-                </div>
-                <div class="result-actions">
-                  <button class="result-btn">📄 对照原文</button>
-                  <button class="result-btn">📋 复制</button>
+                <div class="result-meta">
+                  <div class="meta-tags">
+                    <span class="meta-tag">📊 654 字符</span>
+                    <span class="meta-tag">🔢 第 1/12 段</span>
+                  </div>
+                  <div class="result-actions">
+                    <button class="action-btn">📄 对照原文</button>
+                    <button class="action-btn">📋 复制内容</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Chunk 与原文对照 -->
-        <div class="content-card" id="doc-compare-section" style="display: none;">
-          <div class="card-header">
-            <h2 class="card-title">
-              <span>📑</span>
-              Chunk 与原文对照
-            </h2>
-            <button class="btn btn-secondary btn-sm" onclick="hideDocCompare()">关闭对照</button>
+      <!-- ========== 3. 命中率统计 ========== -->
+      <div class="module-content" id="hit-stats">
+        <div class="page-header">
+          <h1 class="page-title">
+            <span>📊</span>
+            命中率统计
+          </h1>
+          <p class="page-desc">查看命中率指标、趋势分析和多维度统计</p>
+        </div>
+
+        <!-- 统计卡片 -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value primary">89.6%</div>
+            <div class="stat-label">Top-1 命中率</div>
           </div>
-
-          <div class="doc-compare">
-            <div class="doc-panel">
-              <div class="doc-panel-header">
-                <span>📄 命中 Chunk</span>
-                <span style="font-size: 12px; color: var(--text-muted);">分段 #012</span>
-              </div>
-              <div class="doc-panel-content">
-                <div class="doc-highlight">
-                  <strong>提现到账时间</strong>说明：普通提现（T+1）将在申请后的下一个工作日24:00前到账；实时到账功能支持秒级到账。提现失败常见原因包括：银行卡信息错误、超出限额、账户异常等。
-                </div>
-              </div>
-            </div>
-            <div class="doc-panel">
-              <div class="doc-panel-header">
-                <span>📄 原始文档</span>
-                <button class="result-btn btn-sm">查看完整文档</button>
-              </div>
-              <div class="doc-panel-content">
-                <p style="color: var(--text-muted); margin-bottom: 12px;">... 第 10-11 段内容 ...</p>
-                <div class="doc-highlight">
-                  <strong>【第12段 - 命中位置】</strong><br>
-                  提现到账时间说明：普通提现（T+1）将在申请后的下一个工作日24:00前到账；实时到账功能支持秒级到账。提现失败常见原因包括：银行卡信息错误、超出限额、账户异常等。
-                </div>
-                <p style="color: var(--text-muted); margin-top: 12px;">... 第 13-14 段内容 ...</p>
-              </div>
-            </div>
+          <div class="stat-card">
+            <div class="stat-value success">94.2%</div>
+            <div class="stat-label">Top-3 命中率</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value success">96.8%</div>
+            <div class="stat-label">Top-5 命中率</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value info">0.86</div>
+            <div class="stat-label">平均相似度</div>
           </div>
         </div>
 
-        <!-- 3. 命中率统计 -->
+        <!-- 筛选器 -->
         <div class="content-card">
-          <div class="card-header">
-            <h2 class="card-title">
-              <span>📊</span>
-              命中率统计
-            </h2>
-            <div class="card-actions">
-              <select class="form-select" style="width: 150px;">
-                <option>按知识库</option>
-                <option>按文档</option>
-                <option>按 Query 批次</option>
+          <div class="filter-bar">
+            <div class="filter-group">
+              <span class="filter-label">按知识库:</span>
+              <select class="filter-select">
+                <option>全部知识库</option>
+                <option>客服-提现问题</option>
+                <option>VIP会员权益</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <span class="filter-label">按文档:</span>
+              <select class="filter-select">
+                <option>全部文档</option>
+                <option>提现操作指南.pdf</option>
+                <option>常见问题FAQ.md</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <span class="filter-label">按批次:</span>
+              <select class="filter-select">
+                <option>全部批次</option>
+                <option>测试集 v2 (01-27)</option>
+                <option>回归测试 (01-26)</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <span class="filter-label">时间范围:</span>
+              <select class="filter-select">
+                <option>最近 7 天</option>
+                <option>最近 30 天</option>
+                <option>全部时间</option>
               </select>
             </div>
           </div>
 
-          <div class="test-config">
-            <div class="chart-placeholder">
-              <div class="chart-icon">📈</div>
-              <div>命中率趋势图</div>
-              <div style="font-size: 12px; margin-top: 8px;">展示近 7 天命中率变化</div>
+          <!-- 图表区域 -->
+          <div class="charts-grid">
+            <div class="chart-card">
+              <div class="chart-title">
+                <span>📈</span>
+                <span>命中率趋势</span>
+              </div>
+              <div class="chart-placeholder">
+                <div class="chart-icon">📈</div>
+                <div>命中率趋势折线图</div>
+                <div style="font-size: 12px; margin-top: 4px;">展示近 7 天 Top-1/Top-3/Top-5 命中率变化</div>
+              </div>
             </div>
-            <div class="chart-placeholder">
-              <div class="chart-icon">📊</div>
-              <div>TopK 对比图</div>
-              <div style="font-size: 12px; margin-top: 8px;">Top-1 / Top-3 / Top-5 命中率对比</div>
+            <div class="chart-card">
+              <div class="chart-title">
+                <span>📊</span>
+                <span>TopK 对比</span>
+              </div>
+              <div class="chart-placeholder">
+                <div class="chart-icon">📊</div>
+                <div>TopK 命中率柱状图</div>
+                <div style="font-size: 12px; margin-top: 4px;">Top-1 / Top-3 / Top-5 / Top-10 对比</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ========== 评估模块 ========== -->
-      <div class="tab-content" id="eval-module">
-        <!-- 5. 上下文质量评估 -->
+      <!-- ========== 4. 历史回溯 ========== -->
+      <div class="module-content" id="history">
+        <div class="page-header">
+          <h1 class="page-title">
+            <span>📋</span>
+            测试结果留存与历史回溯
+          </h1>
+          <p class="page-desc">查看历史测试记录，支持结果对比和回溯</p>
+        </div>
+
         <div class="content-card">
           <div class="card-header">
-            <h2 class="card-title">
-              <span>🎯</span>
-              上下文质量评估
-            </h2>
+            <div class="card-title">
+              <span>📂</span>
+              <span>历史测试任务</span>
+            </div>
             <div class="card-actions">
-              <button class="btn btn-secondary btn-sm">🤖 LLM 自动评估</button>
-              <button class="btn btn-secondary btn-sm">✏️ 人工标注</button>
+              <select class="filter-select">
+                <option>全部类型</option>
+                <option>批量测试</option>
+                <option>单条测试</option>
+              </select>
+              <select class="filter-select">
+                <option>全部知识库</option>
+                <option>客服-提现问题</option>
+                <option>VIP会员权益</option>
+              </select>
             </div>
           </div>
 
-          <div class="eval-section">
-            <div class="eval-header">
-              <div class="eval-title">📋 当前 Query 评估结果</div>
-              <span style="font-size: 13px; color: var(--text-muted);">提现到账时间是多久？</span>
-            </div>
-            <div class="eval-score-grid">
-              <div class="eval-score-card">
-                <div class="eval-score-value" style="color: var(--accent-success);">92.5%</div>
-                <div class="eval-score-label">上下文精确度 (Context Precision)</div>
-                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">命中 Chunk 中相关内容占比</div>
+          <div class="history-list">
+            <div class="history-item selected">
+              <div class="history-icon batch">📋</div>
+              <div class="history-info">
+                <div class="history-name">提现问题测试集 v2</div>
+                <div class="history-meta">
+                  <span>📚 客服-提现问题</span>
+                  <span>👤 张三</span>
+                  <span>🕐 2026-01-27 14:30</span>
+                </div>
               </div>
-              <div class="eval-score-card">
-                <div class="eval-score-value" style="color: var(--accent-success);">88.3%</div>
-                <div class="eval-score-label">上下文召回率 (Context Recall)</div>
-                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">关键信息召回完整度</div>
+              <div class="history-stats">
+                <div class="history-stat">
+                  <div class="history-stat-value" style="color: var(--accent-success);">92.5%</div>
+                  <div class="history-stat-label">命中率</div>
+                </div>
+                <div class="history-stat">
+                  <div class="history-stat-value" style="color: var(--accent-primary);">100</div>
+                  <div class="history-stat-label">Query数</div>
+                </div>
+              </div>
+              <div class="history-actions">
+                <button class="action-btn">查看详情</button>
+                <button class="action-btn">对比</button>
               </div>
             </div>
-          </div>
 
-          <div class="annotate-panel">
-            <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">✏️ 人工标注校验</div>
-            <div class="annotate-options">
-              <div class="annotate-option selected">
-                <div class="annotate-radio"></div>
-                <span class="annotate-text">✓ 上下文完全满足回答需求</span>
+            <div class="history-item">
+              <div class="history-icon batch">📋</div>
+              <div class="history-info">
+                <div class="history-name">新版本回归测试</div>
+                <div class="history-meta">
+                  <span>📚 客服-提现问题</span>
+                  <span>👤 李四</span>
+                  <span>🕐 2026-01-26 10:15</span>
+                </div>
               </div>
-              <div class="annotate-option">
-                <div class="annotate-radio"></div>
-                <span class="annotate-text">△ 上下文部分满足，缺少关键信息</span>
+              <div class="history-stats">
+                <div class="history-stat">
+                  <div class="history-stat-value" style="color: var(--accent-warning);">88.3%</div>
+                  <div class="history-stat-label">命中率</div>
+                </div>
+                <div class="history-stat">
+                  <div class="history-stat-value" style="color: var(--accent-primary);">100</div>
+                  <div class="history-stat-label">Query数</div>
+                </div>
               </div>
-              <div class="annotate-option">
-                <div class="annotate-radio"></div>
-                <span class="annotate-text">✗ 上下文不相关</span>
+              <div class="history-actions">
+                <button class="action-btn">查看详情</button>
+                <button class="action-btn">对比</button>
               </div>
             </div>
-            <button class="annotate-submit">提交标注</button>
+
+            <div class="history-item">
+              <div class="history-icon single">📝</div>
+              <div class="history-info">
+                <div class="history-name">单条测试: 提现到账时间</div>
+                <div class="history-meta">
+                  <span>📚 客服-提现问题</span>
+                  <span>👤 王五</span>
+                  <span>🕐 2026-01-25 16:45</span>
+                </div>
+              </div>
+              <div class="history-stats">
+                <div class="history-stat">
+                  <div class="history-stat-value" style="color: var(--accent-success);">5/5</div>
+                  <div class="history-stat-label">命中</div>
+                </div>
+                <div class="history-stat">
+                  <div class="history-stat-value" style="color: var(--accent-info);">0.96</div>
+                  <div class="history-stat-label">Top-1</div>
+                </div>
+              </div>
+              <div class="history-actions">
+                <button class="action-btn">查看详情</button>
+                <button class="action-btn">对比</button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- 6. 回答质量评估 -->
+        <!-- 测试配置记录 -->
         <div class="content-card">
           <div class="card-header">
-            <h2 class="card-title">
-              <span>💬</span>
-              回答质量评估
-            </h2>
-          </div>
-
-          <div class="eval-section">
-            <div class="eval-header">
-              <div class="eval-title">🤖 模型回答</div>
-            </div>
-            <div style="background: var(--bg-tertiary); padding: 16px; border-radius: var(--radius-md); margin-bottom: 16px;">
-              <p style="font-size: 14px; line-height: 1.7; color: var(--text-secondary);">
-                根据查询到的信息，提现到账时间主要取决于您选择的提现方式：<br><br>
-                1. <strong>普通提现（T+1）</strong>：将在申请后的下一个工作日24:00前到账<br>
-                2. <strong>实时到账</strong>：支持秒级到账<br><br>
-                如果提现失败，常见原因包括：银行卡信息填写错误、超出每日/每笔限额、账户存在安全风险等。建议您核对银行卡信息后重试。
-              </p>
-            </div>
-            <div class="eval-score-grid">
-              <div class="eval-score-card">
-                <div class="eval-score-value" style="color: var(--accent-success);">94.2%</div>
-                <div class="eval-score-label">忠实度 (Faithfulness)</div>
-                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">回答内容与上下文一致性</div>
-              </div>
-              <div class="eval-score-card">
-                <div class="eval-score-value" style="color: var(--accent-success);">91.8%</div>
-                <div class="eval-score-label">答案相关性 (Answer Relevance)</div>
-                <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">回答与问题的匹配程度</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 7. 评测数据管理 -->
-        <div class="content-card">
-          <div class="card-header">
-            <h2 class="card-title">
-              <span>💾</span>
-              评测数据管理
-            </h2>
-            <div class="card-actions">
-              <button class="btn btn-secondary btn-sm">📤 导出 CSV</button>
-              <button class="btn btn-secondary btn-sm">📤 导出 Excel</button>
+            <div class="card-title">
+              <span>⚙️</span>
+              <span>测试配置详情</span>
             </div>
           </div>
 
-          <div class="test-config" style="margin-bottom: 20px;">
-            <div class="config-section">
-              <div class="config-title">🔍 筛选条件</div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">知识库</label>
-                  <select class="form-select">
-                    <option>全部知识库</option>
-                    <option>客服-提现问题</option>
-                    <option>VIP会员权益</option>
-                  </select>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div style="background: var(--bg-primary); padding: 20px; border-radius: var(--radius-lg);">
+              <div style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">📋 测试信息</div>
+              <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">任务名称</span>
+                  <span>提现问题测试集 v2</span>
                 </div>
-                <div class="form-group">
-                  <label class="form-label">模型</label>
-                  <select class="form-select">
-                    <option>全部模型</option>
-                    <option>text-embedding-3-large</option>
-                    <option>bge-large-zh</option>
-                  </select>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">测试时间</span>
+                  <span>2026-01-27 14:30</span>
                 </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">时间范围</label>
-                  <select class="form-select">
-                    <option>最近 7 天</option>
-                    <option>最近 30 天</option>
-                    <option>自定义范围</option>
-                  </select>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">操作者</span>
+                  <span>张三</span>
                 </div>
-                <div class="form-group">
-                  <label class="form-label">评测类型</label>
-                  <select class="form-select">
-                    <option>全部类型</option>
-                    <option>单条测试</option>
-                    <option>批量测试</option>
-                  </select>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">Query 数量</span>
+                  <span>100 条</span>
                 </div>
               </div>
             </div>
-            <div class="config-section">
-              <div class="config-title">📊 统计概览</div>
-              <div class="eval-score-grid">
-                <div class="eval-score-card">
-                  <div class="eval-score-value" style="color: var(--accent-primary);">1,256</div>
-                  <div class="eval-score-label">总测试次数</div>
+            <div style="background: var(--bg-primary); padding: 20px; border-radius: var(--radius-lg);">
+              <div style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">⚙️ 配置参数</div>
+              <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">Top K</span>
+                  <span>5</span>
                 </div>
-                <div class="eval-score-card">
-                  <div class="eval-score-value" style="color: var(--accent-success);">89.6%</div>
-                  <div class="eval-score-label">平均命中率</div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">相似度阈值</span>
+                  <span>0.5</span>
                 </div>
-                <div class="eval-score-card">
-                  <div class="eval-score-value" style="color: var(--accent-info);">42</div>
-                  <div class="eval-score-label">测试批次</div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">知识库版本</span>
+                  <span>v1.2.0</span>
                 </div>
-                <div class="eval-score-card">
-                  <div class="eval-score-value" style="color: var(--accent-warning);">156</div>
-                  <div class="eval-score-label">人工标注数</div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">Embedding 模型</span>
+                  <span>text-embedding-3-large</span>
                 </div>
               </div>
             </div>
-          </div>
-
-          <table class="batch-table">
-            <thead>
-              <tr>
-                <th>测试任务</th>
-                <th>知识库</th>
-                <th>类型</th>
-                <th>命中率</th>
-                <th>时间</th>
-                <th>操作者</th>
-                <th>操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>提现问题测试集 v2</strong></td>
-                <td>客服-提现问题</td>
-                <td><span class="hit-badge" style="background: rgba(99, 102, 241, 0.15); color: var(--accent-primary);">批量</span></td>
-                <td><span style="color: var(--accent-success); font-weight: 600;">92.5%</span></td>
-                <td>2026-01-27 14:30</td>
-                <td>张三</td>
-                <td>
-                  <button class="result-btn btn-sm">查看</button>
-                  <button class="result-btn btn-sm">对比</button>
-                </td>
-              </tr>
-              <tr>
-                <td><strong>新版本回归测试</strong></td>
-                <td>客服-提现问题</td>
-                <td><span class="hit-badge" style="background: rgba(99, 102, 241, 0.15); color: var(--accent-primary);">批量</span></td>
-                <td><span style="color: var(--accent-success); font-weight: 600;">88.3%</span></td>
-                <td>2026-01-26 10:15</td>
-                <td>李四</td>
-                <td>
-                  <button class="result-btn btn-sm">查看</button>
-                  <button class="result-btn btn-sm">对比</button>
-                </td>
-              </tr>
-              <tr>
-                <td><strong>单条手动测试</strong></td>
-                <td>VIP会员权益</td>
-                <td><span class="hit-badge" style="background: rgba(14, 165, 233, 0.15); color: var(--accent-info);">单条</span></td>
-                <td><span style="color: var(--accent-warning); font-weight: 600;">75.0%</span></td>
-                <td>2026-01-25 16:45</td>
-                <td>王五</td>
-                <td>
-                  <button class="result-btn btn-sm">查看</button>
-                  <button class="result-btn btn-sm">对比</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- 结果对比 -->
-        <div class="content-card">
-          <div class="card-header">
-            <h2 class="card-title">
-              <span>⚖️</span>
-              测试结果对比
-            </h2>
-          </div>
-
-          <div class="compare-container">
-            <div class="compare-panel">
-              <div class="compare-header">
-                <div class="compare-title">测试 A</div>
-                <select class="form-select" style="width: 200px; padding: 8px;">
-                  <option>提现问题测试集 v2</option>
-                  <option>新版本回归测试</option>
-                </select>
-              </div>
-              <div class="eval-score-grid">
-                <div class="eval-score-card">
-                  <div class="eval-score-value" style="color: var(--accent-success);">92.5%</div>
-                  <div class="eval-score-label">命中率</div>
-                </div>
-                <div class="eval-score-card">
-                  <div class="eval-score-value" style="color: var(--accent-primary);">0.86</div>
-                  <div class="eval-score-label">平均相似度</div>
-                </div>
-              </div>
-              <div style="font-size: 12px; color: var(--text-muted); margin-top: 12px;">
-                知识库版本: v1.2.0 · 分段策略: 500字符
-              </div>
-            </div>
-            <div class="compare-panel">
-              <div class="compare-header">
-                <div class="compare-title">测试 B</div>
-                <select class="form-select" style="width: 200px; padding: 8px;">
-                  <option>新版本回归测试</option>
-                  <option>提现问题测试集 v2</option>
-                </select>
-              </div>
-              <div class="eval-score-grid">
-                <div class="eval-score-card">
-                  <div class="eval-score-value" style="color: var(--accent-warning);">88.3%</div>
-                  <div class="eval-score-label">命中率</div>
-                </div>
-                <div class="eval-score-card">
-                  <div class="eval-score-value" style="color: var(--accent-primary);">0.82</div>
-                  <div class="eval-score-label">平均相似度</div>
-                </div>
-              </div>
-              <div style="font-size: 12px; color: var(--text-muted); margin-top: 12px;">
-                知识库版本: v1.1.0 · 分段策略: 300字符
-              </div>
-            </div>
-          </div>
-          <div style="text-align: center; margin-top: 16px; padding: 16px; background: rgba(34, 197, 94, 0.1); border-radius: var(--radius-md);">
-            <span style="color: var(--accent-success); font-weight: 600;">📈 测试 A 命中率提升 4.2%</span>
-            <span style="color: var(--text-muted); margin-left: 16px;">建议采用 500 字符分段策略</span>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- 右侧面板 -->
-    <div class="side-panel">
-      <div class="panel-header">
-        <div class="panel-title">📋 测试详情</div>
-        <div class="panel-subtitle">当前测试配置与历史</div>
+      <!-- ========== 评估模块占位（后续实现） ========== -->
+      <div class="module-content" id="context-eval">
+        <div class="page-header">
+          <h1 class="page-title"><span>🎯</span> 上下文质量评估</h1>
+          <p class="page-desc">评估模块 - 待后续实现</p>
+        </div>
       </div>
 
-      <div class="panel-tabs">
-        <button class="panel-tab active" onclick="switchPanelTab('config')">配置</button>
-        <button class="panel-tab" onclick="switchPanelTab('history')">历史</button>
-        <button class="panel-tab" onclick="switchPanelTab('metrics')">指标</button>
+      <div class="module-content" id="answer-eval">
+        <div class="page-header">
+          <h1 class="page-title"><span>💬</span> 回答质量评估</h1>
+          <p class="page-desc">评估模块 - 待后续实现</p>
+        </div>
       </div>
 
-      <div class="panel-content">
-        <!-- 配置面板 -->
-        <div class="panel-tab-content active" id="panel-config">
-          <div class="panel-section">
-            <div class="panel-section-title">当前测试配置</div>
-            <div style="background: var(--bg-tertiary); padding: 14px; border-radius: var(--radius-md);">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                <span style="color: var(--text-muted); font-size: 13px;">Top K</span>
-                <span style="font-size: 13px; font-weight: 500;">5</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                <span style="color: var(--text-muted); font-size: 13px;">相似度阈值</span>
-                <span style="font-size: 13px; font-weight: 500;">0.5</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                <span style="color: var(--text-muted); font-size: 13px;">知识库</span>
-                <span style="font-size: 13px; font-weight: 500;">客服-提现问题</span>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--text-muted); font-size: 13px;">知识库版本</span>
-                <span style="font-size: 13px; font-weight: 500;">v1.2.0</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel-section">
-            <div class="panel-section-title">Embedding 模型</div>
-            <div style="background: var(--bg-tertiary); padding: 14px; border-radius: var(--radius-md); display: flex; align-items: center; gap: 12px;">
-              <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">🤖</div>
-              <div>
-                <div style="font-size: 14px; font-weight: 500;">text-embedding-3-large</div>
-                <div style="font-size: 12px; color: var(--text-muted);">OpenAI · 3072 维</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 历史面板 -->
-        <div class="panel-tab-content" id="panel-history" style="display: none;">
-          <div class="panel-section">
-            <div class="panel-section-title">测试历史</div>
-            <div class="history-list">
-              <div class="history-item selected">
-                <div class="history-header">
-                  <span class="history-name">提现到账时间测试</span>
-                  <span class="history-badge single">单条</span>
-                </div>
-                <div class="history-meta">
-                  <span>刚刚</span>
-                  <div class="history-stat">
-                    <span style="color: var(--accent-success);">✓</span>
-                    <span>命中 5/5</span>
-                  </div>
-                </div>
-              </div>
-              <div class="history-item">
-                <div class="history-header">
-                  <span class="history-name">提现问题测试集 v2</span>
-                  <span class="history-badge batch">批量</span>
-                </div>
-                <div class="history-meta">
-                  <span>2小时前</span>
-                  <div class="history-stat">
-                    <span style="color: var(--accent-success);">92.5%</span>
-                  </div>
-                </div>
-              </div>
-              <div class="history-item">
-                <div class="history-header">
-                  <span class="history-name">银行卡问题测试</span>
-                  <span class="history-badge single">单条</span>
-                </div>
-                <div class="history-meta">
-                  <span>昨天</span>
-                  <div class="history-stat">
-                    <span style="color: var(--accent-warning);">△</span>
-                    <span>命中 3/5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 指标面板 -->
-        <div class="panel-tab-content" id="panel-metrics" style="display: none;">
-          <div class="panel-section">
-            <div class="panel-section-title">命中率指标</div>
-            <div class="eval-metrics">
-              <div class="metric-item">
-                <div class="metric-icon" style="background: rgba(99, 102, 241, 0.15);">🎯</div>
-                <div class="metric-info">
-                  <div class="metric-name">Top-1 命中率</div>
-                  <div class="metric-desc">首个结果命中</div>
-                </div>
-                <div class="metric-value success">89.6%</div>
-              </div>
-              <div class="metric-item">
-                <div class="metric-icon" style="background: rgba(34, 197, 94, 0.15);">📊</div>
-                <div class="metric-info">
-                  <div class="metric-name">Top-3 命中率</div>
-                  <div class="metric-desc">前3个结果命中</div>
-                </div>
-                <div class="metric-value success">94.2%</div>
-              </div>
-              <div class="metric-item">
-                <div class="metric-icon" style="background: rgba(245, 158, 11, 0.15);">📈</div>
-                <div class="metric-info">
-                  <div class="metric-name">Top-5 命中率</div>
-                  <div class="metric-desc">前5个结果命中</div>
-                </div>
-                <div class="metric-value warning">96.8%</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel-section">
-            <div class="panel-section-title">质量指标</div>
-            <div class="eval-metrics">
-              <div class="metric-item">
-                <div class="metric-icon" style="background: rgba(14, 165, 233, 0.15);">📏</div>
-                <div class="metric-info">
-                  <div class="metric-name">平均相似度</div>
-                </div>
-                <div class="metric-value" style="color: var(--accent-info);">0.86</div>
-              </div>
-              <div class="metric-item">
-                <div class="metric-icon" style="background: rgba(139, 92, 246, 0.15);">⏱️</div>
-                <div class="metric-info">
-                  <div class="metric-name">平均响应时间</div>
-                </div>
-                <div class="metric-value" style="color: var(--accent-primary);">0.18s</div>
-              </div>
-            </div>
-          </div>
+      <div class="module-content" id="data-manage">
+        <div class="page-header">
+          <h1 class="page-title"><span>💾</span> 评测数据管理</h1>
+          <p class="page-desc">评估模块 - 待后续实现</p>
         </div>
       </div>
     </div>
@@ -1851,47 +1548,33 @@
 
   <script>
     // 模块切换
-    function switchModule(module) {
-      document.querySelectorAll('.module-tab').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    function showModule(moduleId) {
+      // 更新导航
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      event.target.closest('.nav-item').classList.add('active');
       
-      event.target.classList.add('active');
-      document.getElementById(module + '-module').classList.add('active');
+      // 更新内容
+      document.querySelectorAll('.module-content').forEach(content => content.classList.remove('active'));
+      document.getElementById(moduleId).classList.add('active');
     }
 
     // 测试模式切换
     function switchTestMode(mode) {
-      document.querySelectorAll('.test-mode-content').forEach(content => {
-        content.style.display = 'none';
-      });
-      document.getElementById(mode + '-test').style.display = 'block';
-    }
-
-    // 面板标签切换
-    function switchPanelTab(tab) {
-      document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.panel-tab-content').forEach(c => c.style.display = 'none');
-      
+      document.querySelectorAll('.test-mode-tab').forEach(tab => tab.classList.remove('active'));
       event.target.classList.add('active');
-      document.getElementById('panel-' + tab).style.display = 'block';
+      
+      if (mode === 'single') {
+        document.getElementById('single-test-area').classList.remove('hidden');
+        document.getElementById('single-test-area').style.display = 'grid';
+        document.getElementById('batch-test-area').classList.remove('active');
+        document.getElementById('batch-test-area').style.display = 'none';
+      } else {
+        document.getElementById('single-test-area').classList.add('hidden');
+        document.getElementById('single-test-area').style.display = 'none';
+        document.getElementById('batch-test-area').classList.add('active');
+        document.getElementById('batch-test-area').style.display = 'block';
+      }
     }
-
-    // 显示/隐藏原文对照
-    function showDocCompare() {
-      document.getElementById('doc-compare-section').style.display = 'block';
-    }
-
-    function hideDocCompare() {
-      document.getElementById('doc-compare-section').style.display = 'none';
-    }
-
-    // 标注选项
-    document.querySelectorAll('.annotate-option').forEach(option => {
-      option.addEventListener('click', function() {
-        this.closest('.annotate-options').querySelectorAll('.annotate-option').forEach(o => o.classList.remove('selected'));
-        this.classList.add('selected');
-      });
-    });
 
     // 历史记录选择
     document.querySelectorAll('.history-item').forEach(item => {
