@@ -1247,19 +1247,19 @@
 
         <div class="db-options">
           <div class="db-option selected" onclick="selectDB(this)">
-            <div class="db-icon">🐘</div>
-            <div class="db-name">PGVector</div>
-            <div class="db-desc">PostgreSQL 扩展，适合中小规模</div>
-          </div>
-          <div class="db-option" onclick="selectDB(this)">
             <div class="db-icon">🔷</div>
             <div class="db-name">Qdrant</div>
             <div class="db-desc">高性能向量搜索引擎</div>
           </div>
           <div class="db-option" onclick="selectDB(this)">
-            <div class="db-icon">🔶</div>
-            <div class="db-name">Milvus</div>
-            <div class="db-desc">分布式向量数据库，适合大规模</div>
+            <div class="db-icon">🐘</div>
+            <div class="db-name">PG</div>
+            <div class="db-desc">PostgreSQL 向量扩展</div>
+          </div>
+          <div class="db-option" onclick="selectDB(this)">
+            <div class="db-icon">🔗</div>
+            <div class="db-name">Neo4j</div>
+            <div class="db-desc">图数据库，支持知识图谱</div>
           </div>
         </div>
 
@@ -1341,7 +1341,7 @@
             </div>
             <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-subtle);">
               <span style="color: var(--text-muted);">向量数据库</span>
-              <span>PGVector</span>
+              <span>Qdrant</span>
             </div>
             <div style="display: flex; justify-content: space-between; padding: 8px 0;">
               <span style="color: var(--text-muted);">更新模式</span>
