@@ -102,10 +102,11 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      cursor: pointer;
     }
 
     .step-connector {
-      width: 100px;
+      width: 120px;
       height: 2px;
       background: var(--border-default);
       margin: 0 16px;
@@ -116,15 +117,15 @@
     }
 
     .step-circle {
-      width: 40px;
-      height: 40px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       background: var(--bg-secondary);
       border: 2px solid var(--border-default);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
       transition: var(--transition-fast);
     }
@@ -147,7 +148,7 @@
     }
 
     .step-label {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text-muted);
     }
@@ -160,6 +161,15 @@
     .step-desc {
       font-size: 12px;
       color: var(--text-muted);
+    }
+
+    /* 步骤内容区域 */
+    .step-content {
+      display: none;
+    }
+
+    .step-content.active {
+      display: block;
     }
 
     /* 内容卡片 */
@@ -194,6 +204,10 @@
 
     .form-row.full {
       grid-template-columns: 1fr;
+    }
+
+    .form-row.triple {
+      grid-template-columns: 1fr 1fr 1fr;
     }
 
     .form-group {
@@ -341,278 +355,145 @@
       color: var(--accent-info);
     }
 
-    /* 版本管理区域 */
-    .version-section {
+    /* 上传区域 */
+    .upload-area {
+      border: 2px dashed var(--border-default);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
       background: var(--bg-primary);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      margin-top: 24px;
     }
 
-    .version-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .upload-area:hover {
+      border-color: var(--accent-primary);
+      background: rgba(99, 102, 241, 0.05);
+    }
+
+    .upload-area.dragover {
+      border-color: var(--accent-primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .upload-icon {
+      font-size: 48px;
       margin-bottom: 16px;
     }
 
-    .version-title {
-      font-size: 14px;
+    .upload-title {
+      font-size: 16px;
       font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      margin-bottom: 8px;
     }
 
-    .version-badge {
+    .upload-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .upload-formats {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .format-tag {
       padding: 4px 10px;
-      background: rgba(34, 197, 94, 0.15);
-      color: var(--accent-success);
+      background: var(--bg-tertiary);
       border-radius: 12px;
       font-size: 12px;
-      font-weight: 500;
-    }
-
-    .version-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .version-btn {
-      padding: 8px 14px;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-sm);
       color: var(--text-secondary);
-      font-size: 13px;
-      cursor: pointer;
-      transition: var(--transition-fast);
     }
 
-    .version-btn:hover {
-      background: var(--bg-elevated);
-      color: var(--text-primary);
-    }
-
-    .version-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .version-item {
-      display: flex;
+    .upload-btn {
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      background: var(--bg-tertiary);
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--gradient-primary);
+      border: none;
       border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: var(--transition-fast);
-    }
-
-    .version-item:hover {
-      background: var(--bg-elevated);
-    }
-
-    .version-item.current {
-      border-left: 3px solid var(--accent-primary);
-    }
-
-    .version-item-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .version-number {
+      color: white;
       font-size: 14px;
-      font-weight: 600;
-    }
-
-    .version-meta {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .version-item-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .version-status {
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 11px;
       font-weight: 500;
-    }
-
-    .version-status.active {
-      background: rgba(34, 197, 94, 0.15);
-      color: var(--accent-success);
-    }
-
-    .version-status.draft {
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--accent-warning);
-    }
-
-    .rollback-btn {
-      padding: 6px 12px;
-      background: transparent;
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-sm);
-      color: var(--text-muted);
-      font-size: 12px;
       cursor: pointer;
-      opacity: 0;
-      transition: var(--transition-fast);
+      margin-top: 16px;
     }
 
-    .version-item:hover .rollback-btn {
-      opacity: 1;
+    /* 文件列表 */
+    .file-list {
+      margin-top: 24px;
     }
 
-    .rollback-btn:hover {
-      border-color: var(--accent-warning);
-      color: var(--accent-warning);
-    }
-
-    /* 知识库列表 */
-    .kb-list-section {
-      margin-top: 32px;
-    }
-
-    .kb-list-header {
+    .file-item {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .kb-list-title {
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    .kb-search {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .kb-search-input {
-      padding: 10px 16px 10px 40px;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-md);
-      color: var(--text-primary);
-      font-size: 14px;
-      width: 280px;
-      position: relative;
-    }
-
-    .kb-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .kb-table th {
-      text-align: left;
-      padding: 14px 16px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .kb-table td {
       padding: 16px;
-      border-bottom: 1px solid var(--border-subtle);
-      font-size: 14px;
-    }
-
-    .kb-table tr:hover td {
       background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
     }
 
-    .kb-name-cell {
+    .file-info {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .kb-icon {
+    .file-icon {
       width: 40px;
       height: 40px;
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-sm);
+      background: var(--bg-elevated);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
     }
 
-    .kb-name {
+    .file-name {
+      font-size: 14px;
       font-weight: 500;
     }
 
-    .kb-desc {
+    .file-meta {
       font-size: 12px;
       color: var(--text-muted);
     }
 
-    .kb-tags {
-      display: flex;
-      gap: 6px;
-    }
-
-    .kb-tag {
-      padding: 4px 10px;
-      background: var(--bg-elevated);
-      border-radius: 12px;
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    .kb-tag.business {
-      background: rgba(99, 102, 241, 0.15);
-      color: var(--accent-primary);
-    }
-
-    .kb-tag.scene {
-      background: rgba(14, 165, 233, 0.15);
-      color: var(--accent-info);
-    }
-
-    .kb-status {
+    .file-status {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
+    .file-status-badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
     }
 
-    .status-dot.online {
-      background: var(--accent-success);
+    .file-status-badge.success {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent-success);
     }
 
-    .status-dot.offline {
-      background: var(--text-muted);
+    .file-status-badge.pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-warning);
     }
 
-    .kb-actions {
+    .file-actions {
       display: flex;
       gap: 8px;
     }
 
-    .kb-action-btn {
+    .file-action-btn {
       width: 32px;
       height: 32px;
       border-radius: var(--radius-sm);
@@ -623,12 +504,246 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: var(--transition-fast);
     }
 
-    .kb-action-btn:hover {
+    .file-action-btn:hover {
       background: var(--bg-elevated);
       color: var(--text-primary);
+    }
+
+    /* 配置区块 */
+    .config-section {
+      background: var(--bg-primary);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .config-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .config-title {
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 选项卡组 */
+    .option-group {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .option-item {
+      flex: 1;
+      padding: 16px;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      text-align: center;
+    }
+
+    .option-item:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .option-item.selected {
+      border-color: var(--accent-primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .option-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .option-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .option-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* 模型卡片 */
+    .model-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      margin-bottom: 8px;
+    }
+
+    .model-card:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .model-card.selected {
+      border-color: var(--accent-primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .model-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .model-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .model-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .model-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .model-badge {
+      padding: 4px 10px;
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent-success);
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* 向量库选项 */
+    .db-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .db-option {
+      padding: 20px;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-default);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      text-align: center;
+    }
+
+    .db-option:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .db-option.selected {
+      border-color: var(--accent-primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .db-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .db-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .db-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* 成功页面 */
+    .success-container {
+      text-align: center;
+      padding: 60px 40px;
+    }
+
+    .success-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--accent-success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      margin: 0 auto 24px;
+      animation: successPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes successPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .success-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .success-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .success-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .success-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
     }
 
     /* 底部按钮 */
@@ -672,117 +787,56 @@
       opacity: 0.9;
     }
 
+    .btn-success {
+      background: var(--accent-success);
+      color: white;
+    }
+
     .btn-group {
       display: flex;
       gap: 12px;
     }
 
-    /* 模态框 */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
+    /* 滑块样式 */
+    .slider-container {
+      margin-top: 8px;
     }
 
-    .modal-overlay.visible {
-      display: flex;
-    }
-
-    .modal {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-xl);
+    .slider {
       width: 100%;
-      max-width: 500px;
-      overflow: hidden;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--bg-elevated);
+      outline: none;
+      -webkit-appearance: none;
     }
 
-    .modal-header {
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border-subtle);
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent-primary);
+      cursor: pointer;
+    }
+
+    .slider-labels {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      margin-top: 8px;
     }
 
-    .modal-title {
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    .modal-close {
-      width: 32px;
-      height: 32px;
-      border-radius: var(--radius-sm);
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    .modal-close:hover {
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
-    }
-
-    .modal-content {
-      padding: 24px;
-    }
-
-    .modal-footer {
-      padding: 20px 24px;
-      border-top: 1px solid var(--border-subtle);
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-    }
-
-    /* 版本对比 */
-    .version-compare {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .compare-panel {
-      background: var(--bg-tertiary);
-      border-radius: var(--radius-md);
-      padding: 16px;
-    }
-
-    .compare-panel-title {
+    .slider-label {
       font-size: 12px;
-      font-weight: 600;
       color: var(--text-muted);
-      margin-bottom: 12px;
     }
 
-    .compare-content {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    .compare-content .added {
-      background: rgba(34, 197, 94, 0.2);
-      color: var(--accent-success);
-      padding: 0 4px;
-      border-radius: 2px;
-    }
-
-    .compare-content .removed {
-      background: rgba(239, 68, 68, 0.2);
-      color: var(--accent-error);
-      padding: 0 4px;
-      border-radius: 2px;
-      text-decoration: line-through;
+    .slider-value {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--accent-primary);
+      margin-bottom: 8px;
     }
   </style>
 </head>
@@ -800,412 +854,558 @@
     <!-- 页面标题 -->
     <div class="page-header">
       <h1 class="page-title">📚 创建知识库</h1>
-      <p class="page-desc">设置知识库基本信息、业务分类和版本管理</p>
+      <p class="page-desc">三步完成知识库创建与配置</p>
     </div>
 
     <!-- 步骤指示器 -->
     <div class="stepper">
-      <div class="step active">
+      <div class="step active" onclick="goToStep(1)">
         <div class="step-circle">1</div>
         <div class="step-info">
           <div class="step-label">基本信息</div>
           <div class="step-desc">名称与分类</div>
         </div>
       </div>
-      <div class="step-connector"></div>
-      <div class="step">
+      <div class="step-connector" id="connector1"></div>
+      <div class="step" onclick="goToStep(2)">
         <div class="step-circle">2</div>
         <div class="step-info">
-          <div class="step-label">数据源</div>
-          <div class="step-desc">上传文件</div>
+          <div class="step-label">数据上传</div>
+          <div class="step-desc">文档与配置</div>
         </div>
       </div>
-      <div class="step-connector"></div>
-      <div class="step">
+      <div class="step-connector" id="connector2"></div>
+      <div class="step" onclick="goToStep(3)">
         <div class="step-circle">3</div>
         <div class="step-info">
-          <div class="step-label">处理配置</div>
-          <div class="step-desc">分段与索引</div>
-        </div>
-      </div>
-      <div class="step-connector"></div>
-      <div class="step">
-        <div class="step-circle">4</div>
-        <div class="step-info">
-          <div class="step-label">完成</div>
-          <div class="step-desc">发布上线</div>
+          <div class="step-label">创建成功</div>
+          <div class="step-desc">完成发布</div>
         </div>
       </div>
     </div>
 
-    <!-- 基本信息卡片 -->
-    <div class="content-card">
-      <h3 class="card-title">
-        <span class="card-title-icon">📝</span>
-        基本信息
-      </h3>
+    <!-- ========== 第一步：基本信息 ========== -->
+    <div class="step-content active" id="step1">
+      <!-- 基本信息卡片 -->
+      <div class="content-card">
+        <h3 class="card-title">
+          <span class="card-title-icon">📝</span>
+          知识库基本信息
+        </h3>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">
-            知识库名称
-            <span class="required">*</span>
-          </label>
-          <input type="text" class="form-input" placeholder="输入知识库名称..." value="客服-提现问题知识库" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">知识库图标</label>
-          <select class="form-select">
-            <option>📚 默认图标</option>
-            <option>💬 客服图标</option>
-            <option>💎 VIP图标</option>
-            <option>📢 广告图标</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-row full">
-        <div class="form-group">
-          <label class="form-label">描述</label>
-          <textarea class="form-input form-textarea" placeholder="简要描述这个知识库的用途...">包含用户提现相关的常见问题、操作流程和故障排查指南，用于客服机器人自动回复。</textarea>
-        </div>
-      </div>
-    </div>
-
-    <!-- 业务分类卡片 -->
-    <div class="content-card">
-      <h3 class="card-title">
-        <span class="card-title-icon">🏷️</span>
-        业务分类
-      </h3>
-
-      <!-- 一级标签：业务 -->
-      <div class="tag-section">
-        <div class="tag-section-title">选择业务领域（一级分类）</div>
-        <div class="tag-grid">
-          <div class="tag-item selected" onclick="selectBusiness(this, 'service')">
-            <span class="icon">💬</span>客服
-          </div>
-          <div class="tag-item" onclick="selectBusiness(this, 'vip')">
-            <span class="icon">💎</span>VIP
-          </div>
-          <div class="tag-item" onclick="selectBusiness(this, 'ad')">
-            <span class="icon">📢</span>广告
-          </div>
-          <div class="tag-item" onclick="selectBusiness(this, 'payment')">
-            <span class="icon">💳</span>支付
-          </div>
-          <div class="tag-item" onclick="selectBusiness(this, 'content')">
-            <span class="icon">📱</span>内容
-          </div>
-          <div class="tag-item" onclick="selectBusiness(this, 'other')">
-            <span class="icon">📦</span>其他
-          </div>
-        </div>
-
-        <!-- 二级标签：业务场景 -->
-        <div class="scene-tags visible" id="service-scenes">
-          <div class="scene-tags-label">选择业务场景（二级分类）</div>
-          <div class="tag-grid">
-            <div class="scene-tag selected">提现</div>
-            <div class="scene-tag">充值</div>
-            <div class="scene-tag">账户问题</div>
-            <div class="scene-tag">订单查询</div>
-            <div class="scene-tag">退款</div>
-            <div class="scene-tag">投诉建议</div>
-            <div class="scene-tag">+ 添加场景</div>
-          </div>
-        </div>
-
-        <div class="scene-tags" id="vip-scenes">
-          <div class="scene-tags-label">选择业务场景（二级分类）</div>
-          <div class="tag-grid">
-            <div class="scene-tag">会员开通</div>
-            <div class="scene-tag">权益说明</div>
-            <div class="scene-tag">续费问题</div>
-            <div class="scene-tag">等级规则</div>
-            <div class="scene-tag">+ 添加场景</div>
-          </div>
-        </div>
-
-        <div class="scene-tags" id="ad-scenes">
-          <div class="scene-tags-label">选择业务场景（二级分类）</div>
-          <div class="tag-grid">
-            <div class="scene-tag">投放咨询</div>
-            <div class="scene-tag">账户管理</div>
-            <div class="scene-tag">数据报表</div>
-            <div class="scene-tag">素材审核</div>
-            <div class="scene-tag">+ 添加场景</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 版本管理卡片 -->
-    <div class="content-card">
-      <h3 class="card-title">
-        <span class="card-title-icon">📋</span>
-        版本管理
-      </h3>
-
-      <div class="version-section">
-        <div class="version-header">
-          <div class="version-title">
-            <span>版本历史</span>
-            <span class="version-badge">3 个版本</span>
-          </div>
-          <div class="version-actions">
-            <button class="version-btn" onclick="showCompareModal()">📊 版本对比</button>
-            <button class="version-btn">📤 导出版本</button>
-          </div>
-        </div>
-
-        <div class="version-list">
-          <div class="version-item current">
-            <div class="version-item-left">
-              <span class="version-number">v1.2.0</span>
-              <span class="version-meta">当前版本 · 2026-01-27 14:30 · 张三</span>
-            </div>
-            <div class="version-item-right">
-              <span class="version-status active">已发布</span>
-            </div>
-          </div>
-          <div class="version-item">
-            <div class="version-item-left">
-              <span class="version-number">v1.1.0</span>
-              <span class="version-meta">2026-01-25 10:15 · 李四</span>
-            </div>
-            <div class="version-item-right">
-              <button class="rollback-btn">回滚到此版本</button>
-            </div>
-          </div>
-          <div class="version-item">
-            <div class="version-item-left">
-              <span class="version-number">v1.0.0</span>
-              <span class="version-meta">初始版本 · 2026-01-20 09:00 · 王五</span>
-            </div>
-            <div class="version-item-right">
-              <button class="rollback-btn">回滚到此版本</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-row" style="margin-top: 24px;">
-        <div class="form-group">
-          <label class="form-label">新版本号</label>
-          <input type="text" class="form-input" value="v1.3.0" />
-          <p class="form-hint">建议遵循语义化版本规范 (major.minor.patch)</p>
-        </div>
-        <div class="form-group">
-          <label class="form-label">版本备注</label>
-          <input type="text" class="form-input" placeholder="描述本次版本变更内容..." />
-        </div>
-      </div>
-    </div>
-
-    <!-- 知识库列表 -->
-    <div class="content-card">
-      <h3 class="card-title">
-        <span class="card-title-icon">📂</span>
-        现有知识库
-      </h3>
-
-      <div class="kb-list-header">
-        <div class="kb-search">
-          <input type="text" class="kb-search-input" placeholder="🔍 搜索知识库..." />
-          <select class="form-select" style="width: 150px;">
-            <option>全部业务</option>
-            <option>客服</option>
-            <option>VIP</option>
-            <option>广告</option>
-          </select>
-        </div>
-        <button class="btn btn-primary">
-          <span>+</span>
-          <span>新建知识库</span>
-        </button>
-      </div>
-
-      <table class="kb-table">
-        <thead>
-          <tr>
-            <th>知识库名称</th>
-            <th>业务分类</th>
-            <th>版本</th>
-            <th>状态</th>
-            <th>更新时间</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div class="kb-name-cell">
-                <div class="kb-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">💬</div>
-                <div>
-                  <div class="kb-name">客服-提现问题知识库</div>
-                  <div class="kb-desc">提现相关常见问题</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="kb-tags">
-                <span class="kb-tag business">客服</span>
-                <span class="kb-tag scene">提现</span>
-              </div>
-            </td>
-            <td>v1.2.0</td>
-            <td>
-              <div class="kb-status">
-                <span class="status-dot online"></span>
-                <span>在线</span>
-              </div>
-            </td>
-            <td>5 分钟前</td>
-            <td>
-              <div class="kb-actions">
-                <button class="kb-action-btn">✏️</button>
-                <button class="kb-action-btn">📋</button>
-                <button class="kb-action-btn">🗑️</button>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="kb-name-cell">
-                <div class="kb-icon" style="background: linear-gradient(135deg, #22c55e, #10b981);">💎</div>
-                <div>
-                  <div class="kb-name">VIP会员权益知识库</div>
-                  <div class="kb-desc">会员等级与权益说明</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="kb-tags">
-                <span class="kb-tag business">VIP</span>
-                <span class="kb-tag scene">权益说明</span>
-              </div>
-            </td>
-            <td>v2.0.1</td>
-            <td>
-              <div class="kb-status">
-                <span class="status-dot online"></span>
-                <span>在线</span>
-              </div>
-            </td>
-            <td>2 小时前</td>
-            <td>
-              <div class="kb-actions">
-                <button class="kb-action-btn">✏️</button>
-                <button class="kb-action-btn">📋</button>
-                <button class="kb-action-btn">🗑️</button>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="kb-name-cell">
-                <div class="kb-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">📢</div>
-                <div>
-                  <div class="kb-name">广告投放指南</div>
-                  <div class="kb-desc">广告投放操作与规范</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="kb-tags">
-                <span class="kb-tag business">广告</span>
-                <span class="kb-tag scene">投放咨询</span>
-              </div>
-            </td>
-            <td>v1.0.0</td>
-            <td>
-              <div class="kb-status">
-                <span class="status-dot offline"></span>
-                <span>草稿</span>
-              </div>
-            </td>
-            <td>1 天前</td>
-            <td>
-              <div class="kb-actions">
-                <button class="kb-action-btn">✏️</button>
-                <button class="kb-action-btn">📋</button>
-                <button class="kb-action-btn">🗑️</button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- 底部操作按钮 -->
-    <div class="footer-actions">
-      <button class="btn btn-secondary">取消</button>
-      <div class="btn-group">
-        <button class="btn btn-secondary">保存草稿</button>
-        <button class="btn btn-primary">
-          <span>下一步</span>
-          <span>→</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 版本对比模态框 -->
-  <div class="modal-overlay" id="compareModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h3 class="modal-title">📊 版本对比</h3>
-        <button class="modal-close" onclick="hideCompareModal()">✕</button>
-      </div>
-      <div class="modal-content">
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">选择版本 A</label>
-            <select class="form-select">
-              <option>v1.2.0 (当前)</option>
-              <option>v1.1.0</option>
-              <option>v1.0.0</option>
-            </select>
+            <label class="form-label">
+              知识库名称
+              <span class="required">*</span>
+            </label>
+            <input type="text" class="form-input" placeholder="输入知识库名称..." value="客服-提现问题知识库" />
           </div>
           <div class="form-group">
-            <label class="form-label">选择版本 B</label>
+            <label class="form-label">知识库图标</label>
             <select class="form-select">
-              <option>v1.1.0</option>
-              <option>v1.0.0</option>
+              <option>📚 默认图标</option>
+              <option>💬 客服图标</option>
+              <option>💎 VIP图标</option>
+              <option>📢 广告图标</option>
             </select>
           </div>
         </div>
 
-        <div class="version-compare">
-          <div class="compare-panel">
-            <div class="compare-panel-title">v1.2.0 (当前版本)</div>
-            <div class="compare-content">
-              <p>• 新增 <span class="added">提现失败原因说明</span> 文档</p>
-              <p>• 更新 提现操作流程图</p>
-              <p>• 新增 <span class="added">银行卡限额说明</span></p>
-              <p>• 共 156 个分段</p>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">描述</label>
+            <textarea class="form-input form-textarea" placeholder="简要描述这个知识库的用途...">包含用户提现相关的常见问题、操作流程和故障排查指南，用于客服机器人自动回复。</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 业务分类卡片 -->
+      <div class="content-card">
+        <h3 class="card-title">
+          <span class="card-title-icon">🏷️</span>
+          业务分类
+        </h3>
+
+        <!-- 一级标签：业务 -->
+        <div class="tag-section">
+          <div class="tag-section-title">选择业务领域（一级分类）<span class="required">*</span></div>
+          <div class="tag-grid">
+            <div class="tag-item selected" onclick="selectBusiness(this, 'service')">
+              <span class="icon">💬</span>客服
+            </div>
+            <div class="tag-item" onclick="selectBusiness(this, 'vip')">
+              <span class="icon">💎</span>VIP
+            </div>
+            <div class="tag-item" onclick="selectBusiness(this, 'ad')">
+              <span class="icon">📢</span>广告
+            </div>
+            <div class="tag-item" onclick="selectBusiness(this, 'payment')">
+              <span class="icon">💳</span>支付
+            </div>
+            <div class="tag-item" onclick="selectBusiness(this, 'content')">
+              <span class="icon">📱</span>内容
+            </div>
+            <div class="tag-item" onclick="selectBusiness(this, 'other')">
+              <span class="icon">📦</span>其他
             </div>
           </div>
-          <div class="compare-panel">
-            <div class="compare-panel-title">v1.1.0</div>
-            <div class="compare-content">
-              <p>• <span class="removed">删除了旧版提现说明</span></p>
-              <p>• 提现操作流程图（旧版）</p>
-              <p>• 共 142 个分段</p>
+
+          <!-- 二级标签：业务场景 -->
+          <div class="scene-tags visible" id="service-scenes">
+            <div class="scene-tags-label">选择业务场景（二级分类）</div>
+            <div class="tag-grid">
+              <div class="scene-tag selected">提现</div>
+              <div class="scene-tag">充值</div>
+              <div class="scene-tag">账户问题</div>
+              <div class="scene-tag">订单查询</div>
+              <div class="scene-tag">退款</div>
+              <div class="scene-tag">投诉建议</div>
+              <div class="scene-tag">+ 添加场景</div>
+            </div>
+          </div>
+
+          <div class="scene-tags" id="vip-scenes">
+            <div class="scene-tags-label">选择业务场景（二级分类）</div>
+            <div class="tag-grid">
+              <div class="scene-tag">会员开通</div>
+              <div class="scene-tag">权益说明</div>
+              <div class="scene-tag">续费问题</div>
+              <div class="scene-tag">等级规则</div>
+              <div class="scene-tag">+ 添加场景</div>
+            </div>
+          </div>
+
+          <div class="scene-tags" id="ad-scenes">
+            <div class="scene-tags-label">选择业务场景（二级分类）</div>
+            <div class="tag-grid">
+              <div class="scene-tag">投放咨询</div>
+              <div class="scene-tag">账户管理</div>
+              <div class="scene-tag">数据报表</div>
+              <div class="scene-tag">素材审核</div>
+              <div class="scene-tag">+ 添加场景</div>
+            </div>
+          </div>
+
+          <div class="scene-tags" id="payment-scenes">
+            <div class="scene-tags-label">选择业务场景（二级分类）</div>
+            <div class="tag-grid">
+              <div class="scene-tag">支付失败</div>
+              <div class="scene-tag">退款问题</div>
+              <div class="scene-tag">账单查询</div>
+              <div class="scene-tag">绑卡问题</div>
+              <div class="scene-tag">+ 添加场景</div>
             </div>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="hideCompareModal()">关闭</button>
-        <button class="btn btn-primary">应用 v1.1.0</button>
+
+      <!-- 底部操作按钮 -->
+      <div class="footer-actions">
+        <button class="btn btn-secondary">取消</button>
+        <div class="btn-group">
+          <button class="btn btn-secondary">保存草稿</button>
+          <button class="btn btn-primary" onclick="goToStep(2)">
+            <span>下一步：数据上传</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 第二步：数据上传 ========== -->
+    <div class="step-content" id="step2">
+      <!-- 文件上传卡片 -->
+      <div class="content-card">
+        <h3 class="card-title">
+          <span class="card-title-icon">📄</span>
+          文档上传
+        </h3>
+
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-icon">📁</div>
+          <div class="upload-title">拖拽文件到此处上传</div>
+          <div class="upload-desc">或点击选择本地文件</div>
+          <div class="upload-formats">
+            <span class="format-tag">PDF</span>
+            <span class="format-tag">DOCX</span>
+            <span class="format-tag">DOC</span>
+            <span class="format-tag">TXT</span>
+            <span class="format-tag">Markdown</span>
+            <span class="format-tag">Excel</span>
+            <span class="format-tag">CSV</span>
+            <span class="format-tag">HTML</span>
+          </div>
+          <button class="upload-btn">
+            <span>📂</span>
+            <span>选择文件</span>
+          </button>
+        </div>
+
+        <div class="file-list">
+          <div class="file-item">
+            <div class="file-info">
+              <div class="file-icon">📄</div>
+              <div>
+                <div class="file-name">提现操作指南.pdf</div>
+                <div class="file-meta">2.3 MB · PDF 文档</div>
+              </div>
+            </div>
+            <div class="file-status">
+              <span class="file-status-badge success">已上传</span>
+              <div class="file-actions">
+                <button class="file-action-btn">👁️</button>
+                <button class="file-action-btn">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="file-item">
+            <div class="file-info">
+              <div class="file-icon">📊</div>
+              <div>
+                <div class="file-name">常见问题FAQ.xlsx</div>
+                <div class="file-meta">856 KB · Excel 表格</div>
+              </div>
+            </div>
+            <div class="file-status">
+              <span class="file-status-badge success">已上传</span>
+              <div class="file-actions">
+                <button class="file-action-btn">👁️</button>
+                <button class="file-action-btn">🗑️</button>
+              </div>
+            </div>
+          </div>
+          <div class="file-item">
+            <div class="file-info">
+              <div class="file-icon">📝</div>
+              <div>
+                <div class="file-name">银行卡限额说明.md</div>
+                <div class="file-meta">45 KB · Markdown 文档</div>
+              </div>
+            </div>
+            <div class="file-status">
+              <span class="file-status-badge pending">上传中...</span>
+              <div class="file-actions">
+                <button class="file-action-btn">⏸️</button>
+                <button class="file-action-btn">🗑️</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 文档更新模式 -->
+      <div class="content-card">
+        <h3 class="card-title">
+          <span class="card-title-icon">🔄</span>
+          文档更新模式
+        </h3>
+
+        <div class="option-group">
+          <div class="option-item selected" onclick="selectOption(this, 'update-mode')">
+            <div class="option-icon">🔄</div>
+            <div class="option-title">全量更新</div>
+            <div class="option-desc">清空现有数据，重新导入全部文档</div>
+          </div>
+          <div class="option-item" onclick="selectOption(this, 'update-mode')">
+            <div class="option-icon">➕</div>
+            <div class="option-title">增量追加</div>
+            <div class="option-desc">保留现有数据，追加新文档</div>
+          </div>
+          <div class="option-item" onclick="selectOption(this, 'update-mode')">
+            <div class="option-icon">📝</div>
+            <div class="option-title">覆盖更新</div>
+            <div class="option-desc">相同文件覆盖，新文件追加</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 解析与切片配置 -->
+      <div class="content-card">
+        <h3 class="card-title">
+          <span class="card-title-icon">✂️</span>
+          解析与切片配置
+        </h3>
+
+        <div class="config-section">
+          <div class="config-title">分段设置</div>
+          <div class="form-row triple">
+            <div class="form-group">
+              <label class="form-label">分段长度</label>
+              <div class="slider-value" id="chunkSizeValue">500</div>
+              <div class="slider-container">
+                <input type="range" class="slider" min="100" max="2000" value="500" 
+                  oninput="document.getElementById('chunkSizeValue').textContent = this.value">
+              </div>
+              <div class="slider-labels">
+                <span class="slider-label">100</span>
+                <span class="slider-label">2000</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">分段重叠</label>
+              <div class="slider-value" id="overlapValue">50</div>
+              <div class="slider-container">
+                <input type="range" class="slider" min="0" max="200" value="50"
+                  oninput="document.getElementById('overlapValue').textContent = this.value">
+              </div>
+              <div class="slider-labels">
+                <span class="slider-label">0</span>
+                <span class="slider-label">200</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">分段规则</label>
+              <select class="form-select">
+                <option>自动分段</option>
+                <option>按段落分段</option>
+                <option>按句子分段</option>
+                <option>按标题分段</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="config-section">
+          <div class="config-title">高级选项</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">预处理规则</label>
+              <select class="form-select">
+                <option>智能清洗（推荐）</option>
+                <option>保留原始格式</option>
+                <option>纯文本提取</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">表格处理</label>
+              <select class="form-select">
+                <option>转为结构化文本</option>
+                <option>保留表格格式</option>
+                <option>忽略表格</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Embedding 模型配置 -->
+      <div class="content-card">
+        <h3 class="card-title">
+          <span class="card-title-icon">🧠</span>
+          Embedding 模型配置
+        </h3>
+
+        <div class="model-card selected" onclick="selectModel(this)">
+          <div class="model-info">
+            <div class="model-icon">🤖</div>
+            <div>
+              <div class="model-name">text-embedding-3-large</div>
+              <div class="model-meta">OpenAI · 3072 维 · 高精度</div>
+            </div>
+          </div>
+          <span class="model-badge">推荐</span>
+        </div>
+
+        <div class="model-card" onclick="selectModel(this)">
+          <div class="model-info">
+            <div class="model-icon" style="background: linear-gradient(135deg, #22c55e, #10b981);">🔮</div>
+            <div>
+              <div class="model-name">text-embedding-3-small</div>
+              <div class="model-meta">OpenAI · 1536 维 · 性价比高</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="model-card" onclick="selectModel(this)">
+          <div class="model-info">
+            <div class="model-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">⚡</div>
+            <div>
+              <div class="model-name">bge-large-zh-v1.5</div>
+              <div class="model-meta">本地部署 · 1024 维 · 中文优化</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="model-card" onclick="selectModel(this)">
+          <div class="model-info">
+            <div class="model-icon" style="background: linear-gradient(135deg, #0ea5e9, #6366f1);">🌐</div>
+            <div>
+              <div class="model-name">m3e-large</div>
+              <div class="model-meta">本地部署 · 1024 维 · 多语言</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 向量库配置 -->
+      <div class="content-card">
+        <h3 class="card-title">
+          <span class="card-title-icon">🗄️</span>
+          向量数据库配置
+        </h3>
+
+        <div class="db-options">
+          <div class="db-option selected" onclick="selectDB(this)">
+            <div class="db-icon">🐘</div>
+            <div class="db-name">PGVector</div>
+            <div class="db-desc">PostgreSQL 扩展，适合中小规模</div>
+          </div>
+          <div class="db-option" onclick="selectDB(this)">
+            <div class="db-icon">🔷</div>
+            <div class="db-name">Qdrant</div>
+            <div class="db-desc">高性能向量搜索引擎</div>
+          </div>
+          <div class="db-option" onclick="selectDB(this)">
+            <div class="db-icon">🔶</div>
+            <div class="db-name">Milvus</div>
+            <div class="db-desc">分布式向量数据库，适合大规模</div>
+          </div>
+        </div>
+
+        <div class="config-section" style="margin-top: 20px;">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">索引类型</label>
+              <select class="form-select">
+                <option>HNSW（推荐）</option>
+                <option>IVF_FLAT</option>
+                <option>IVF_PQ</option>
+                <option>FLAT</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">相似度算法</label>
+              <select class="form-select">
+                <option>余弦相似度（Cosine）</option>
+                <option>欧几里得距离（L2）</option>
+                <option>内积（IP）</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部操作按钮 -->
+      <div class="footer-actions">
+        <button class="btn btn-secondary" onclick="goToStep(1)">
+          <span>←</span>
+          <span>上一步</span>
+        </button>
+        <div class="btn-group">
+          <button class="btn btn-secondary">保存草稿</button>
+          <button class="btn btn-primary" onclick="goToStep(3)">
+            <span>创建知识库</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 第三步：创建成功 ========== -->
+    <div class="step-content" id="step3">
+      <div class="content-card">
+        <div class="success-container">
+          <div class="success-icon">✓</div>
+          <h2 class="success-title">🎉 知识库创建成功！</h2>
+          <p class="success-desc">您的知识库已成功创建，正在后台处理文档向量化</p>
+
+          <div class="success-stats">
+            <div class="stat-item">
+              <div class="stat-value">3</div>
+              <div class="stat-label">文档数量</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">156</div>
+              <div class="stat-label">预计分段</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">~2min</div>
+              <div class="stat-label">预计处理时间</div>
+            </div>
+          </div>
+
+          <div class="config-section" style="text-align: left; max-width: 500px; margin: 0 auto;">
+            <div class="config-title" style="margin-bottom: 16px;">📋 创建详情</div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-subtle);">
+              <span style="color: var(--text-muted);">知识库名称</span>
+              <span>客服-提现问题知识库</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-subtle);">
+              <span style="color: var(--text-muted);">业务分类</span>
+              <span>客服 / 提现</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-subtle);">
+              <span style="color: var(--text-muted);">Embedding 模型</span>
+              <span>text-embedding-3-large</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-subtle);">
+              <span style="color: var(--text-muted);">向量数据库</span>
+              <span>PGVector</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+              <span style="color: var(--text-muted);">更新模式</span>
+              <span>全量更新</span>
+            </div>
+          </div>
+
+          <div class="success-actions" style="margin-top: 40px;">
+            <a href="index.html" class="btn btn-secondary">
+              <span>📋</span>
+              <span>返回列表</span>
+            </a>
+            <a href="retrieval.html" class="btn btn-primary">
+              <span>🔍</span>
+              <span>测试检索</span>
+            </a>
+            <a href="file-upload.html" class="btn btn-success">
+              <span>📄</span>
+              <span>继续上传</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
+    let currentStep = 1;
+
+    function goToStep(step) {
+      // 隐藏所有步骤内容
+      document.querySelectorAll('.step-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      // 显示目标步骤内容
+      document.getElementById('step' + step).classList.add('active');
+      
+      // 更新步骤指示器
+      const steps = document.querySelectorAll('.step');
+      const connectors = document.querySelectorAll('.step-connector');
+      
+      steps.forEach((stepEl, index) => {
+        stepEl.classList.remove('active', 'completed');
+        if (index + 1 < step) {
+          stepEl.classList.add('completed');
+        } else if (index + 1 === step) {
+          stepEl.classList.add('active');
+        }
+      });
+      
+      connectors.forEach((connector, index) => {
+        connector.classList.remove('completed');
+        if (index + 1 < step) {
+          connector.classList.add('completed');
+        }
+      });
+      
+      currentStep = step;
+      
+      // 滚动到顶部
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function selectBusiness(element, businessId) {
       // 移除所有选中状态
       document.querySelectorAll('.tag-item').forEach(tag => {
@@ -1225,12 +1425,26 @@
       }
     }
 
-    function showCompareModal() {
-      document.getElementById('compareModal').classList.add('visible');
+    function selectOption(element, group) {
+      const parent = element.parentElement;
+      parent.querySelectorAll('.option-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+      element.classList.add('selected');
     }
 
-    function hideCompareModal() {
-      document.getElementById('compareModal').classList.remove('visible');
+    function selectModel(element) {
+      document.querySelectorAll('.model-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      element.classList.add('selected');
+    }
+
+    function selectDB(element) {
+      document.querySelectorAll('.db-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      element.classList.add('selected');
     }
 
     // 场景标签点击
@@ -1240,6 +1454,24 @@
           this.classList.toggle('selected');
         }
       });
+    });
+
+    // 拖拽上传
+    const uploadArea = document.getElementById('uploadArea');
+    
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      // 处理文件上传
     });
   </script>
 </body>
